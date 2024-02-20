@@ -87,7 +87,7 @@ fun SignupScreen(
                     modifier = Modifier.align(Alignment.Start)
                 )
 
-                Text("Sign in now to explore, engage, and enjoy!",
+                Text("Sign up now to explore, engage, and enjoy!",
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = AlegreyaSansFontFamily,

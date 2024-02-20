@@ -94,7 +94,7 @@ fun WelcomeScreen(
             Spacer(modifier = Modifier.weight(1f))
 
 
-            CButton(text = "Sign In With Email",
+            CButton(text = "Sign In",
                 onClick = {
                     navController.navigate("login")
                 }
