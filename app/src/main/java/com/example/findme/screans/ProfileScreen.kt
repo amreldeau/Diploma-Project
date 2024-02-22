@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -34,14 +36,30 @@ import com.example.findme.ui.theme.Lato
 @Composable
 fun ProfileScreen() {
 
-    Box(modifier =  Modifier.fillMaxSize()){
+    Box(modifier = Modifier.fillMaxSize()) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(20.dp),
             horizontalAlignment = Alignment.CenterHorizontally // Align items to the center
         ) {
-            Spacer(modifier = Modifier.size(20.dp))
+
+//          LOGO
+            Spacer(modifier = Modifier.size(40.dp))
+            Text(
+                text = "FATEDATE",
+                color = Color.Black,
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center, // Center align text
+                    fontFamily = Lato,
+                    fontWeight = FontWeight.Black
+                )
+            )
+
+//          PROFILE IMG
+            Spacer(modifier = Modifier.size(50.dp))
             Image(
                 painter = painterResource(id = R.drawable.profile),
                 contentDescription = null,
@@ -53,7 +71,9 @@ fun ProfileScreen() {
                         border = BorderStroke(2.dp, Color.White)
                     )
             )
-            Spacer(modifier = Modifier.size(20.dp))
+
+//          USERNAME
+            Spacer(modifier = Modifier.size(40.dp))
             Text(
                 text = "USER NAME",
                 color = Color.Black,
@@ -65,28 +85,51 @@ fun ProfileScreen() {
                 )
             )
 
-            Spacer(modifier = Modifier.size(20.dp))
+//          SETTINGS BUTT
+            Spacer(modifier = Modifier.size(50.dp))
             Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)), // Add this line
-            colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
-            ) {
-            Text(text = "SETTINGS")
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .width(280.dp)
+                    .height(50.dp)
+                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)), // Add this line
+                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
+            )
+            {
+                //Button text
+                Text(
+                    text = "SETTINGS",
+                    color = Color.White,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center, // Center align text
+                        fontFamily = Lato,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
             }
 
-            Spacer(modifier = Modifier.size(20.dp))
+//          EDIT PROFILE BUTT
+            Spacer(modifier = Modifier.size(30.dp))
             Button(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .fillMaxWidth()
-                .shadow(elevation = 5.dp, shape = RoundedCornerShape(10.dp)), // Add this line
-            colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
-            ) {
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .width(280.dp)
+                    .height(50.dp)
+                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)), // Add this line
+                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
+            )
+            {
+                //Button text
                 Text(
-                    text = "EDIT PROFILE"
-
+                    text = "EDIT PROFILE",
+                    color = Color.White,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center, // Center align text
+                        fontFamily = Lato,
+                        fontWeight = FontWeight.Bold
+                    )
                 )
             }
         }
