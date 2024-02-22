@@ -41,7 +41,7 @@ fun WelcomeScreen(
     ) {
         // Background Image
         Image(
-            painter = painterResource(id = R.drawable.bg2),
+            painter = painterResource(id = R.drawable.bg3),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
