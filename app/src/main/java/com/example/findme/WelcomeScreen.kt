@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.ui.theme.AlegreyaFontFamily
@@ -32,7 +33,10 @@ import com.example.findme.components.DontHaveAccountRow
 
 @Composable
 fun WelcomeScreen(
-    navController: NavHostController,
+    // changed to NavController from NavHostController
+    navController: NavController,
+    //from yt
+    vm: FbViewModel,
     modifier: Modifier = Modifier
 ) {
 
@@ -96,13 +100,13 @@ fun WelcomeScreen(
 
             CButton(text = "Sign In",
                 onClick = {
-                    navController.navigate("login")
+                    navController.navigate(DestinationScreen.Login.route)
                 }
             )
 
             DontHaveAccountRow(
                 onSignupTap = {
-                    navController.navigate("signup")
+                    navController.navigate(DestinationScreen.Signup.route)
                 }
             )
         }
@@ -112,5 +116,5 @@ fun WelcomeScreen(
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen(rememberNavController())
+    //WelcomeScreen(rememberNavController())
 }

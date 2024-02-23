@@ -2,6 +2,7 @@ package com.example.findme
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,9 +12,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,26 +28,37 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHost
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.components.CButton
 import com.example.findme.components.CTextField
 import com.example.findme.ui.theme.AlegreyaFontFamily
 import com.example.findme.ui.theme.AlegreyaSansFontFamily
-import com.example.findme.components.CButton
-import com.example.findme.components.CTextField
-import com.example.findme.components.DontHaveAccountRow
-import com.example.findme.ui.theme.AlegreyaFontFamily
-import com.example.findme.ui.theme.AlegreyaSansFontFamily
 
 @Composable
 fun SignupScreen(
-    navController: NavHostController
+    // changed to NavController from NavHostController
+    navController: NavController,
+    //from yt
+    vm: FbViewModel,
 ) {
+    val empty by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    //var cpassword by remember { mutableStateOf("") }
+    //var passwordVisibility by remember { mutableStateOf(false) }
+    //var cpasswordVisibility by remember { mutableStateOf(false) }
+    var errorE by remember { mutableStateOf(false) }
+    var errorP by remember { mutableStateOf(false) }
+    //var errorCP by remember { mutableStateOf(false) }
+    //var errorC by remember { mutableStateOf(false) }
+    var plength by remember { mutableStateOf(false) }
+
     Surface(
         color = Color(0xFF253334),
         modifier = Modifier.fillMaxSize()
@@ -56,6 +74,31 @@ fun SignupScreen(
                     .height(190.dp)
                     .align(Alignment.BottomCenter)
             )
+
+            // added from yt
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                if (vm.inProgress.value) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            // added form yt ( entire components get into this colum) check later
+            /*Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 150.dp)
+                    .verticalScroll(
+                        rememberScrollState()
+                    )
+            ) {
+
+            }
+             */
 
             /// Content
 
@@ -99,16 +142,82 @@ fun SignupScreen(
                 )
 
 
-                // Text Field
-                CTextField(hint = "Full Name", value = "" )
+                CTextField(
+                    hint = "Full Name", value = "", keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    )
+                )
 
-                CTextField(hint = "Phone Number", value = "" )
 
-                CTextField(hint = "Password", value = "" )
+                if (errorE) {
+                    Text(
+                        text = "Enter email",
+                        color = Color.Red,
+                        modifier = Modifier.padding(end = 100.dp)
+                    )
+                }
+                CTextField(
+                    value = email,
+                    onValueChange = {
+                        email = it
+                    },
+                    hint = "Email",
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next
+                    )
+                )
+
+                if (errorP) {
+                    Text(
+                        text = "Enter Password",
+                        color = Color.Red,
+                        modifier = Modifier.padding(end = 100.dp)
+                    )
+                }
+                if (plength) {
+                    Text(
+                        text = "Password must be at least 6 characters",
+                        color = Color.Red,
+                        modifier = Modifier.padding(end = 100.dp)
+                    )
+                }
+                CTextField(
+                    value = password,
+                    onValueChange = {
+                        password = it
+                        plength = it.length < 6
+                    },
+                    hint = "Password",
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Password
+                    )
+                )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                CButton(text = "Sign Up")
+                CButton(onClick = {
+                    if (email.isNotEmpty()){
+                        errorE = false
+                        if (password.isNotEmpty()){
+                            errorP = false
+                        }
+                        else {
+                            errorP = true
+                        }
+                    }
+                    else {
+                        errorE = true
+                    }
+                },
+                    text = "Sign Up",
+                )
+
+                if (vm.signedIn.value) {
+                    navController.navigate(DestinationScreen.Success.route)
+                }
+                vm.signedIn.value = false
+
 
                 Row(
                     modifier = Modifier.padding(top=12.dp, bottom = 52.dp)
@@ -141,5 +250,5 @@ fun SignupScreen(
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
 fun SignupScreenPreview() {
-    SignupScreen(rememberNavController())
+    //SignupScreen(rememberNavController())
 }
