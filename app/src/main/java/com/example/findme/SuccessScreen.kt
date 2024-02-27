@@ -16,6 +16,6 @@ fun SuccessScreen(navController: NavController, vm: FbViewModel) {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "welcome")
+        MainScreen()
     }
 }

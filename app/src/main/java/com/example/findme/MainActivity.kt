@@ -26,10 +26,10 @@ class MainActivity : ComponentActivity() {
                 /// Let just add navigation so users can go from one screen to another
                 //NavigationView()
 
-                //AuthenticationApp()
+                AuthenticationApp()
 
                 //from remote
-                MainScreen()
+                //MainScreen()
             }
         }
     }
