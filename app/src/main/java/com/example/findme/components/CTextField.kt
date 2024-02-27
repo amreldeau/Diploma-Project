@@ -2,6 +2,7 @@ package com.example.findme.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -13,7 +14,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.findme.ui.theme.AlegreyaSansFontFamily
-import com.example.findme.ui.theme.AlegreyaSansFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,8 +21,10 @@ fun CTextField(
     onValueChange: (String) -> Unit = {},
     hint: String,
     value: String,
+    keyboardOptions: KeyboardOptions,
 ) {
     TextField(
+        keyboardOptions = keyboardOptions,
         value = value,
         onValueChange = onValueChange,
         placeholder = {
