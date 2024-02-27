@@ -3,12 +3,14 @@ package com.example.findme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.main.NotificationMessage
+import com.example.findme.navigation.AppNavigation
 import com.example.findme.ui.theme.FindMeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,17 +26,20 @@ class MainActivity : ComponentActivity() {
                 /// Let just add navigation so users can go from one screen to another
                 //NavigationView()
 
-                AuthenticationApp()
+                //AuthenticationApp()
+
+                //from remote
+                MainScreen()
             }
         }
     }
 }
 
 sealed class DestinationScreen(val route: String) {
-    object Main: DestinationScreen("main")
-    object Signup: DestinationScreen("signup")
-    object Login: DestinationScreen("login")
-    object Success: DestinationScreen("success")
+    object Main : DestinationScreen("main")
+    object Signup : DestinationScreen("signup")
+    object Login : DestinationScreen("login")
+    object Success : DestinationScreen("success")
 }
 
 @Composable
@@ -59,6 +64,20 @@ fun AuthenticationApp(){
         }
     }
 }
+
+@Composable
+fun DefaultPreview() {
+    FindMeTheme {
+        MainScreen()
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen() {
+    AppNavigation()
+}
+
 
 //Deprecated composable func
 /*
