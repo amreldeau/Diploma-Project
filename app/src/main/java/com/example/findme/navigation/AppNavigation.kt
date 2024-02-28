@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import com.example.findme.screans.ProfileScreen
 import com.example.findme.screans.CamScreen
 import com.example.findme.screans.ChatScreen
+import com.example.findme.screans.SettingsScreen
 
 @Composable
 fun HomeScreen() {
@@ -70,7 +71,21 @@ fun AppNavigation() {
                 ChatScreen()
             }
             composable(route = Screens.ProfileScreen.name) {
-                ProfileScreen()
+                ProfileScreen {
+                    navController.navigate(Screens.SettingsScreen.name)
+                }
+            }
+            composable(route = Screens.ProfileScreen.name) {
+                ProfileScreen {
+                    navController.navigate(Screens.SettingsScreen.name)
+                }
+            }
+            composable(route = Screens.SettingsScreen.name) {
+                SettingsScreen(
+                    onBackPressed = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

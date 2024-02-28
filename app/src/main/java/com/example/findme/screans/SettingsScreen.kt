@@ -1,10 +1,9 @@
 package com.example.findme.screans
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,84 +11,66 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.compose.rememberNavController
-import com.example.findme.R
-import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
+import com.google.firebase.annotations.concurrent.Background
 
 @Composable
-fun ProfileScreen(onSettingsClicked: () -> Unit) {
-
+fun SettingsScreen(onBackPressed: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally // Align items to the center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.size(47.dp))
 
-//          LOGO
-            Spacer(modifier = Modifier.size(40.dp))
-            Text(
-                text = "FATEDATE",
-                color = Color.Black,
-                style = androidx.compose.ui.text.TextStyle(
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Center, // Center align text
-                    fontFamily = Lato,
-                    fontWeight = FontWeight.Black
-                )
-            )
+            Row(
+                modifier = Modifier.align(Alignment.Start),
+                verticalAlignment = Alignment.CenterVertically
 
-//          PROFILE IMG
-            Spacer(modifier = Modifier.size(50.dp))
-            Image(
-                painter = painterResource(id = R.drawable.profile),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(200.dp)
-                    .clip(CircleShape)
-                    .border(
-                        shape = CircleShape,
-                        border = BorderStroke(2.dp, Color.White)
+            ) {
+                IconButton(onClick = onBackPressed) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back"
                     )
-            )
-
-//          USERNAME
-            Spacer(modifier = Modifier.size(40.dp))
-            Text(
-                text = "USER NAME",
-                color = Color.Black,
-                style = androidx.compose.ui.text.TextStyle(
-                    fontSize = 25.sp,
-                    textAlign = TextAlign.Center, // Center align text
-                    fontFamily = Lato,
-                    fontWeight = FontWeight.Bold
+                }
+                Text(
+                    text = "SETTINGS",
+                    color = Color.Black,
+                    style = TextStyle(
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Start, // Center align text
+                        fontFamily = Lato,
+                        fontWeight = FontWeight.Black
+                    )
                 )
-            )
-
-//          SETTINGS BUTT
-            Spacer(modifier = Modifier.size(50.dp))
+            }
+            Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = onSettingsClicked,
+                onClick = { /*TODO*/ },
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
@@ -99,9 +80,9 @@ fun ProfileScreen(onSettingsClicked: () -> Unit) {
             {
                 //Button text
                 Text(
-                    text = "SETTINGS",
+                    text = "CHANGE THEME",
                     color = Color.White,
-                    style = androidx.compose.ui.text.TextStyle(
+                    style = TextStyle(
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center, // Center align text
                         fontFamily = Lato,
@@ -109,8 +90,6 @@ fun ProfileScreen(onSettingsClicked: () -> Unit) {
                     )
                 )
             }
-
-//          EDIT PROFILE BUTT
             Spacer(modifier = Modifier.size(30.dp))
             Button(
                 onClick = { /*TODO*/ },
@@ -123,9 +102,9 @@ fun ProfileScreen(onSettingsClicked: () -> Unit) {
             {
                 //Button text
                 Text(
-                    text = "EDIT PROFILE",
+                    text = "SELECT LANGUAGE",
                     color = Color.White,
-                    style = androidx.compose.ui.text.TextStyle(
+                    style = TextStyle(
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center, // Center align text
                         fontFamily = Lato,
@@ -139,10 +118,6 @@ fun ProfileScreen(onSettingsClicked: () -> Unit) {
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
-fun ProfileScreenPreview() {
-    val navController = rememberNavController()
-
-    ProfileScreen {
-        navController.navigate(Screens.SettingsScreen.name)
-    }
+fun PreviewSettingsScreen() {
+        SettingsScreen(onBackPressed = {})
 }
