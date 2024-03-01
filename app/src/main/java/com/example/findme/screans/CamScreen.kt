@@ -10,19 +10,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.findme.ui.theme.AlegreyaFontFamily
+import com.example.findme.cameraroll.CameraPer
 
 @Composable
 fun CamScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(
-            text = "Cam Screen",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = AlegreyaFontFamily
-        )
-    }
-}
 
+    CameraPer()
+}
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
 fun CamScreenPreview() {
