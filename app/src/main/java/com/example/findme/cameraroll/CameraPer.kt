@@ -26,13 +26,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
+import androidx.navigation.compose.rememberNavController
 import com.example.findme.R
+import com.example.findme.cameraroll.CameraChat
 
 @Composable
 fun CameraPer() {
 
+    val navController = rememberNavController()
     val context = LocalContext.current
     val hasPermission = remember {
         mutableStateOf(
@@ -104,11 +108,11 @@ fun CameraPer() {
         ) {
             IconButton(
                 onClick = {
-//                    TODO
+                    navController.navigate("CameraChat") // replace "CameraChat" with your actual route name or action id
                 }
             ) {
                 Icon(
-                    imageVector = R.drawable.chat,
+                    painter = painterResource(id = R.drawable.chat),
                     contentDescription = "Go to Chat"
                 )
             }

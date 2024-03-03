@@ -14,7 +14,6 @@ import com.example.findme.cameraroll.CameraPer
 
 @Composable
 fun CamScreen() {
-
     CameraPer()
 }
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
