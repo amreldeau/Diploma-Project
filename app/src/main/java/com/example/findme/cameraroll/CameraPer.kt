@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,9 +27,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.R
 import com.example.findme.cameraroll.CameraChat
@@ -64,7 +68,7 @@ fun CameraPer() {
         }
     }
 
-    val controller = remember{
+    val controller = remember {
         LifecycleCameraController(context).apply {
             setEnabledUseCases(
                 CameraController.IMAGE_CAPTURE or
@@ -82,38 +86,43 @@ fun CameraPer() {
             modifier = Modifier.fillMaxSize()
         )
 
-        IconButton(
-            onClick = {
-                controller.cameraSelector =
-                    if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
-                        CameraSelector.DEFAULT_FRONT_CAMERA
-                    } else {
-                        CameraSelector.DEFAULT_BACK_CAMERA
-                    }
-            },
-            modifier = Modifier
-                .offset(x = 16.dp, y = 16.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = "Switch Camera"
-            )
-        }
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .align(Alignment.BottomCenter)
                 .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceAround
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Top
         ) {
             IconButton(
                 onClick = {
-                    navController.navigate("CameraChat") // replace "CameraChat" with your actual route name or action id
+                    controller.cameraSelector =
+                        if (controller.cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) {
+                            CameraSelector.DEFAULT_FRONT_CAMERA
+                        } else {
+                            CameraSelector.DEFAULT_BACK_CAMERA
+                        }
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Switch Camera",
+                    modifier = Modifier
+                        .size(24.dp),
+                    tint = Color.White
+                )
+            }
+
+            IconButton(
+                onClick = {
+                    navController.navigate("CameraChat")
                 }
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.chat),
-                    contentDescription = "Go to Chat"
+                    contentDescription = "Go to Chat",
+                    modifier = Modifier
+                        .size(24.dp),
+                    tint = Color.White
                 )
             }
         }
