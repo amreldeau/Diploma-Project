@@ -17,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import com.example.findme.screans.ProfileScreen
 import com.example.findme.screans.CamScreen
 import com.example.findme.screans.ChatScreen
+import com.example.findme.cameraroll.CameraChat
 
 @Composable
 fun HomeScreen() {
@@ -71,6 +72,9 @@ fun AppNavigation() {
             }
             composable(route = Screens.ProfileScreen.name) {
                 ProfileScreen()
+            }
+            composable(route = Screens.CameraChat.name) {
+                CameraChat()
             }
         }
     }

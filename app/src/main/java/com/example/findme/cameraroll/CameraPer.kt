@@ -41,6 +41,7 @@ import com.example.findme.cameraroll.CameraChat
 fun CameraPer() {
 
     val navController = rememberNavController()
+
     val context = LocalContext.current
     val hasPermission = remember {
         mutableStateOf(
@@ -114,7 +115,9 @@ fun CameraPer() {
 
             IconButton(
                 onClick = {
-                    navController.navigate("CameraChat")
+                    navController?.let {
+                        it.navigate("CameraChat")
+                    }
                 }
             ) {
                 Icon(
