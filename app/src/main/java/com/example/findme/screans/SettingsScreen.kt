@@ -31,6 +31,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
 import com.google.firebase.annotations.concurrent.Background
 
@@ -118,6 +121,9 @@ fun SettingsScreen(onBackPressed: () -> Unit) {
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
-fun PreviewSettingsScreen() {
-        SettingsScreen(onBackPressed = {})
+fun ProfileScreenPreview(navController: NavController = rememberNavController()) {
+    ProfileScreen(
+        { navController.navigate(Screens.SettingsScreen.name) },
+        navController
+    )
 }

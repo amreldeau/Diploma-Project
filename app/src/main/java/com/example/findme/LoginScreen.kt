@@ -50,17 +50,15 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var errorE by remember { mutableStateOf(false) }
     var errorP by remember { mutableStateOf(false) }
-    var plength by remember { mutableStateOf(false) }
 
     // we can copy and paste and do changes for signup screen
     Surface(
         color = Color(0xFF253334),
         modifier = Modifier.fillMaxSize()
     ) {
-
-
         Box(modifier =  Modifier.fillMaxSize()){
-            /// Background Image
+
+            // Background Image
             Image(painter = painterResource(id = R.drawable.bg1),
                 contentDescription = null,
                 modifier = Modifier
@@ -69,8 +67,7 @@ fun LoginScreen(
                     .align(Alignment.BottomCenter)
             )
 
-            /// Content
-
+            // Content
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -118,7 +115,6 @@ fun LoginScreen(
                         modifier = Modifier.padding(end = 100.dp)
                     )
                 }
-
                 CTextField(
                     value = email,
                     onValueChange = {
@@ -182,11 +178,4 @@ fun LoginScreen(
             }
         }
     }
-}
-
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
-@Composable
-fun LoginScreenPreview() {
-    //LoginScreen(rememberNavController())
 }

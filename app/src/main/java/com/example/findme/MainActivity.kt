@@ -23,13 +23,7 @@ class MainActivity : ComponentActivity() {
             window.navigationBarColor = getColor(R.color.black)
 
             FindMeTheme {
-                /// Let just add navigation so users can go from one screen to another
-                //NavigationView()
-
                 AuthenticationApp()
-
-                //from remote
-                //MainScreen()
             }
         }
     }
@@ -51,7 +45,7 @@ fun AuthenticationApp(){
 
     NavHost(navController = navController, startDestination = DestinationScreen.Main.route) {
         composable(DestinationScreen.Main.route) {
-            WelcomeScreen(navController, vm)
+            WelcomeScreen(navController)
         }
         composable(DestinationScreen.Signup.route) {
             SignupScreen(navController, vm)
@@ -65,33 +59,8 @@ fun AuthenticationApp(){
     }
 }
 
-@Composable
-fun DefaultPreview() {
-    FindMeTheme {
-        MainScreen()
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     AppNavigation()
 }
-
-
-//Deprecated composable func
-/*
-@Composable
-fun NavigationView() {
-
-    val navController = rememberNavController()
-
-    NavHost(navController = navController, startDestination = "welcome" ){
-        // also pass navController to each screen so we can use navController in there
-        composable("welcome"){ WelcomeScreen(navController)}
-        composable("login"){ LoginScreen(navController)}
-        composable("signup"){ SignupScreen(navController)}
-    }
-
-}
-*/
