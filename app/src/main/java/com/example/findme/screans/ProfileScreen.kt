@@ -29,13 +29,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.R
 import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
 
 @Composable
-fun ProfileScreen(onSettingsClicked: () -> Unit) {
+fun ProfileScreen(
+    onSettingsClicked: () -> Unit,
+    navController: NavController
+) {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -113,7 +117,7 @@ fun ProfileScreen(onSettingsClicked: () -> Unit) {
 //          EDIT PROFILE BUTT
             Spacer(modifier = Modifier.size(30.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Screens.ChangeProfile1.name) },
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
@@ -142,7 +146,8 @@ fun ProfileScreen(onSettingsClicked: () -> Unit) {
 fun ProfileScreenPreview() {
     val navController = rememberNavController()
 
-    ProfileScreen {
-        navController.navigate(Screens.SettingsScreen.name)
-    }
+    ProfileScreen(
+        { navController.navigate(Screens.SettingsScreen.name) },
+        rememberNavController()
+    )
 }

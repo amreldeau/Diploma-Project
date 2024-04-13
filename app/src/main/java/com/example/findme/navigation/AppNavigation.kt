@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.res.painterResource
 import com.example.findme.screans.ProfileScreen
 import com.example.findme.screans.CamScreen
+import com.example.findme.screans.ChangeProfile1
 import com.example.findme.screans.ChatScreen
 import com.example.findme.screans.SettingsScreen
 
@@ -71,14 +72,10 @@ fun AppNavigation() {
                 ChatScreen()
             }
             composable(route = Screens.ProfileScreen.name) {
-                ProfileScreen {
-                    navController.navigate(Screens.SettingsScreen.name)
-                }
-            }
-            composable(route = Screens.ProfileScreen.name) {
-                ProfileScreen {
-                    navController.navigate(Screens.SettingsScreen.name)
-                }
+                ProfileScreen(
+                    { navController.navigate(Screens.SettingsScreen.name) },
+                    navController
+                )
             }
             composable(route = Screens.SettingsScreen.name) {
                 SettingsScreen(
@@ -86,6 +83,21 @@ fun AppNavigation() {
                         navController.popBackStack()
                     }
                 )
+            }
+            composable(route = Screens.ChangeProfile1.name) {
+                ChangeProfile1(navController) {
+                    navController.popBackStack()
+                }
+            }
+            composable(route = Screens.ChangeProfile2.name) {
+                ChangeProfile1(navController) {
+                    navController.popBackStack()
+                }
+            }
+            composable(route = Screens.ChangeProfile3.name) {
+                ChangeProfile1(navController) {
+                    navController.popBackStack()
+                }
             }
         }
     }

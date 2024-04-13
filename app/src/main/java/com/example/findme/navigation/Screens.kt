@@ -1,5 +1,5 @@
 package com.example.findme.navigation
 
 enum class Screens {
-    HomeScreen, CamScreen, ChatScreen, ProfileScreen, SettingsScreen
+    HomeScreen, CamScreen, ChatScreen, ProfileScreen, SettingsScreen, ChangeProfile1, ChangeProfile2, ChangeProfile3
 }

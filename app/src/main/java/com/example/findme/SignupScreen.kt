@@ -33,6 +33,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.components.CButton
@@ -47,25 +48,18 @@ fun SignupScreen(
     //from yt
     vm: FbViewModel,
 ) {
-    val empty by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    //var cpassword by remember { mutableStateOf("") }
-    //var passwordVisibility by remember { mutableStateOf(false) }
-    //var cpasswordVisibility by remember { mutableStateOf(false) }
     var errorE by remember { mutableStateOf(false) }
     var errorP by remember { mutableStateOf(false) }
-    //var errorCP by remember { mutableStateOf(false) }
-    //var errorC by remember { mutableStateOf(false) }
     var plength by remember { mutableStateOf(false) }
 
     Surface(
         color = Color(0xFF253334),
         modifier = Modifier.fillMaxSize()
     ) {
-
-
         Box(modifier =  Modifier.fillMaxSize()){
+
             /// Background Image
             Image(painter = painterResource(id = R.drawable.bg1),
                 contentDescription = null,
@@ -86,22 +80,7 @@ fun SignupScreen(
                 }
             }
 
-            // added form yt ( entire components get into this colum) check later
-            /*Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 150.dp)
-                    .verticalScroll(
-                        rememberScrollState()
-                    )
-            ) {
-
-            }
-             */
-
-            /// Content
-
+            // Content
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -201,6 +180,7 @@ fun SignupScreen(
                         errorE = false
                         if (password.isNotEmpty()){
                             errorP = false
+                            vm.onSignup(email, password)
                         }
                         else {
                             errorP = true
@@ -245,10 +225,4 @@ fun SignupScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
-@Composable
-fun SignupScreenPreview() {
-    //SignupScreen(rememberNavController())
 }

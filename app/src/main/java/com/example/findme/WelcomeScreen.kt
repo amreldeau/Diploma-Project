@@ -24,25 +24,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.findme.ui.theme.AlegreyaFontFamily
-import com.example.findme.ui.theme.AlegreyaSansFontFamily
 import com.example.findme.components.CButton
 import com.example.findme.components.DontHaveAccountRow
+import com.example.findme.ui.theme.AlegreyaFontFamily
+import com.example.findme.ui.theme.AlegreyaSansFontFamily
 
 @Composable
 fun WelcomeScreen(
     // changed to NavController from NavHostController
     navController: NavController,
     //from yt
-    vm: FbViewModel,
+    //vm: FbViewModel,
     modifier: Modifier = Modifier
 ) {
 
     Box(
         modifier = modifier.fillMaxSize()
     ) {
+
         // Background Image
         Image(
             painter = painterResource(id = R.drawable.bg3),
@@ -50,6 +50,7 @@ fun WelcomeScreen(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
         )
+
         // Overlay to enhance text visibility
         Box(
             modifier = Modifier
@@ -57,7 +58,7 @@ fun WelcomeScreen(
                 .background(Color.Black.copy(alpha = 0.5f)) // Adjust the alpha as needed
         )
 
-        /// Content
+        // Content
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -113,8 +114,8 @@ fun WelcomeScreen(
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
+@Preview(showBackground = true, widthDp = 320, heightDp = 640)
 fun WelcomeScreenPreview() {
-    //WelcomeScreen(rememberNavController())
+    WelcomeScreen(rememberNavController())
 }
