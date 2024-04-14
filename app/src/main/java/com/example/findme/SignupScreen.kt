@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -89,7 +90,8 @@ fun SignupScreen(
             ) {
 
                 // Logo
-                Image(painter = painterResource(id = R.drawable.logo2),
+                Image(
+                    painter = painterResource(id = R.drawable.logo2),
                     contentDescription = null,
                     modifier = Modifier
                         .padding(top = 54.dp)
@@ -99,7 +101,8 @@ fun SignupScreen(
                     colorFilter = ColorFilter.tint(Color.White)
                 )
 
-                Text(text = "FateDate",
+                Text(
+                    text = stringResource(id = R.string.app_name),
                     style = TextStyle(
                         fontSize = 28.sp,
                         fontFamily = AlegreyaFontFamily,
@@ -109,7 +112,8 @@ fun SignupScreen(
                     modifier = Modifier.align(Alignment.Start)
                 )
 
-                Text("Sign up now to explore, engage, and enjoy!",
+                Text(
+                    text = "Sign up now to explore, engage, and enjoy!",
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = AlegreyaSansFontFamily,

@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +54,7 @@ fun ProfileScreen(
 //          LOGO
             Spacer(modifier = Modifier.size(40.dp))
             Text(
-                text = "FATEDATE",
+                text = stringResource(id = R.string.app_name),
                 color = Color.Black,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = 30.sp,
