@@ -16,3 +16,5 @@ enum class Tabs(val value: String) {
     CHATS("Chats"),
     FRIENDS("Friends")
 }
+
+const val INITIAL_SCREEN_INDEX = 0
