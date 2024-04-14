@@ -81,4 +81,5 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt ("com.google.dagger:hilt-android-compiler:2.44")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 }

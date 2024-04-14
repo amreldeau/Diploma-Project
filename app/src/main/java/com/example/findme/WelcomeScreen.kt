@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,7 +81,7 @@ fun WelcomeScreen(
             )
 
             Text(
-                "FateDate",
+                text = stringResource(id = R.string.app_name),
                 fontSize = 32.sp,
                 fontFamily = AlegreyaFontFamily,
                 fontWeight = FontWeight(700),
