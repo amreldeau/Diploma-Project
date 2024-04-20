@@ -1,6 +1,7 @@
 package com.example.findme.navigation
 
 import android.annotation.SuppressLint
+import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -15,13 +16,12 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.res.painterResource
 import com.example.findme.screans.ProfileScreen
-import com.example.findme.screans.CamScreen
+import com.example.findme.screans.VideoChatScreen
+import com.example.findme.screans.ChangeProfile1
 import com.example.findme.screans.ChatScreen
-
-@Composable
-fun HomeScreen() {
-    // Define your HomeScreen here
-}
+import com.example.findme.screans.HomeScreen
+import com.example.findme.screans.SettingsScreen
+import com.example.findme.viewmodels.VideoChatViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
@@ -63,14 +63,39 @@ fun AppNavigation() {
             composable(route = Screens.HomeScreen.name){
                 HomeScreen()
             }
-            composable(route = Screens.CamScreen.name){
-                CamScreen()
+            composable(route = Screens.VideoChatScreen.name){
+                VideoChatScreen()
             }
             composable(route = Screens.ChatScreen.name){
                 ChatScreen()
             }
             composable(route = Screens.ProfileScreen.name) {
-                ProfileScreen()
+                ProfileScreen(
+                    { navController.navigate(Screens.SettingsScreen.name) },
+                    navController
+                )
+            }
+            composable(route = Screens.SettingsScreen.name) {
+                SettingsScreen(
+                    onBackPressed = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+            composable(route = Screens.ChangeProfile1.name) {
+                ChangeProfile1(navController) {
+                    navController.popBackStack()
+                }
+            }
+            composable(route = Screens.ChangeProfile2.name) {
+                ChangeProfile1(navController) {
+                    navController.popBackStack()
+                }
+            }
+            composable(route = Screens.ChangeProfile3.name) {
+                ChangeProfile1(navController) {
+                    navController.popBackStack()
+                }
             }
         }
     }

@@ -7,9 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class FbViewModel @Inject constructor(
-    val auth: FirebaseAuth
-): ViewModel() {
+class FbViewModel @Inject constructor(val auth: FirebaseAuth): ViewModel() {
 
     val signedIn = mutableStateOf(false)
     val inProgress = mutableStateOf(false)
@@ -34,20 +32,19 @@ class FbViewModel @Inject constructor(
     fun login(email: String, pass: String) {
         inProgress.value = true
 
-        auth.createUserWithEmailAndPassword(email, pass)
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
+        auth.signInWithEmailAndPassword(email, pass)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     signedIn.value = true
-                    handleException(it.exception, "Login successful")
-                }
-                else {
-                    handleException(it.exception, "Login failed")
+                    handleException(null, "Login successful")
+                } else {
+                    handleException(task.exception, "Login failed")
                 }
                 inProgress.value = false
             }
     }
 
-    fun handleException(exception: Exception? = null, customMessage: String = "") {
+    private fun handleException(exception: Exception? = null, customMessage: String = "") {
         exception?.printStackTrace()
         val errorMsg = exception?.localizedMessage ?: ""
         val message = if (customMessage.isEmpty()) errorMsg else "$customMessage: $errorMsg"

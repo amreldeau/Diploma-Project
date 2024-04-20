@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,16 +24,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.findme.R
+import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    onSettingsClicked: () -> Unit,
+    navController: NavController
+) {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -48,7 +54,7 @@ fun ProfileScreen() {
 //          LOGO
             Spacer(modifier = Modifier.size(40.dp))
             Text(
-                text = "FATEDATE",
+                text = stringResource(id = R.string.app_name),
                 color = Color.Black,
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = 30.sp,
@@ -88,7 +94,7 @@ fun ProfileScreen() {
 //          SETTINGS BUTT
             Spacer(modifier = Modifier.size(50.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = onSettingsClicked,
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
@@ -112,7 +118,7 @@ fun ProfileScreen() {
 //          EDIT PROFILE BUTT
             Spacer(modifier = Modifier.size(30.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Screens.ChangeProfile1.name) },
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
@@ -139,5 +145,10 @@ fun ProfileScreen() {
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
 fun ProfileScreenPreview() {
-    ProfileScreen()
+    val navController = rememberNavController()
+
+    ProfileScreen(
+        { navController.navigate(Screens.SettingsScreen.name) },
+        rememberNavController()
+    )
 }

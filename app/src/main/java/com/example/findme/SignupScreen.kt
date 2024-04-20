@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.components.CButton
@@ -47,25 +49,18 @@ fun SignupScreen(
     //from yt
     vm: FbViewModel,
 ) {
-    val empty by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    //var cpassword by remember { mutableStateOf("") }
-    //var passwordVisibility by remember { mutableStateOf(false) }
-    //var cpasswordVisibility by remember { mutableStateOf(false) }
     var errorE by remember { mutableStateOf(false) }
     var errorP by remember { mutableStateOf(false) }
-    //var errorCP by remember { mutableStateOf(false) }
-    //var errorC by remember { mutableStateOf(false) }
     var plength by remember { mutableStateOf(false) }
 
     Surface(
         color = Color(0xFF253334),
         modifier = Modifier.fillMaxSize()
     ) {
-
-
         Box(modifier =  Modifier.fillMaxSize()){
+
             /// Background Image
             Image(painter = painterResource(id = R.drawable.bg1),
                 contentDescription = null,
@@ -86,22 +81,7 @@ fun SignupScreen(
                 }
             }
 
-            // added form yt ( entire components get into this colum) check later
-            /*Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = 150.dp)
-                    .verticalScroll(
-                        rememberScrollState()
-                    )
-            ) {
-
-            }
-             */
-
-            /// Content
-
+            // Content
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -110,7 +90,8 @@ fun SignupScreen(
             ) {
 
                 // Logo
-                Image(painter = painterResource(id = R.drawable.logo2),
+                Image(
+                    painter = painterResource(id = R.drawable.logo2),
                     contentDescription = null,
                     modifier = Modifier
                         .padding(top = 54.dp)
@@ -120,7 +101,8 @@ fun SignupScreen(
                     colorFilter = ColorFilter.tint(Color.White)
                 )
 
-                Text(text = "FateDate",
+                Text(
+                    text = stringResource(id = R.string.app_name),
                     style = TextStyle(
                         fontSize = 28.sp,
                         fontFamily = AlegreyaFontFamily,
@@ -130,7 +112,8 @@ fun SignupScreen(
                     modifier = Modifier.align(Alignment.Start)
                 )
 
-                Text("Sign up now to explore, engage, and enjoy!",
+                Text(
+                    text = "Sign up now to explore, engage, and enjoy!",
                     style = TextStyle(
                         fontSize = 20.sp,
                         fontFamily = AlegreyaSansFontFamily,
@@ -201,6 +184,7 @@ fun SignupScreen(
                         errorE = false
                         if (password.isNotEmpty()){
                             errorP = false
+                            vm.onSignup(email, password)
                         }
                         else {
                             errorP = true
@@ -245,10 +229,4 @@ fun SignupScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
-@Composable
-fun SignupScreenPreview() {
-    //SignupScreen(rememberNavController())
 }

@@ -36,6 +36,9 @@ fun CTextField(
                 )
             )
         },
+        textStyle = TextStyle(
+            color = Color.White // Set the text color to white
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(bottom = 8.dp),
@@ -44,6 +47,5 @@ fun CTextField(
             focusedIndicatorColor = Color(0xFFBEC2C2),
             unfocusedIndicatorColor = Color(0xFFBEC2C2)
         )
-
     )
 }

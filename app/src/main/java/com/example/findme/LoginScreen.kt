@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -50,17 +51,15 @@ fun LoginScreen(
     var password by remember { mutableStateOf("") }
     var errorE by remember { mutableStateOf(false) }
     var errorP by remember { mutableStateOf(false) }
-    var plength by remember { mutableStateOf(false) }
 
     // we can copy and paste and do changes for signup screen
     Surface(
         color = Color(0xFF253334),
         modifier = Modifier.fillMaxSize()
     ) {
-
-
         Box(modifier =  Modifier.fillMaxSize()){
-            /// Background Image
+
+            // Background Image
             Image(painter = painterResource(id = R.drawable.bg1),
                 contentDescription = null,
                 modifier = Modifier
@@ -69,8 +68,7 @@ fun LoginScreen(
                     .align(Alignment.BottomCenter)
             )
 
-            /// Content
-
+            // Content
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
@@ -89,7 +87,7 @@ fun LoginScreen(
                     colorFilter = ColorFilter.tint(Color.White)
                 )
 
-                Text(text = "FateDate",
+                Text(text = stringResource(id = R.string.app_name),
                     style = TextStyle(
                         fontSize = 28.sp,
                         fontFamily = AlegreyaFontFamily,
@@ -118,7 +116,6 @@ fun LoginScreen(
                         modifier = Modifier.padding(end = 100.dp)
                     )
                 }
-
                 CTextField(
                     value = email,
                     onValueChange = {
@@ -182,11 +179,4 @@ fun LoginScreen(
             }
         }
     }
-}
-
-
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
-@Composable
-fun LoginScreenPreview() {
-    //LoginScreen(rememberNavController())
 }
