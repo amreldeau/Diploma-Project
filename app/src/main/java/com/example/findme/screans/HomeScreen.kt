@@ -39,11 +39,10 @@ import com.example.findme.R
 import com.example.findme.navigation.Screens
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
             .background(Color.LightGray)
     ) {
         Image(
@@ -106,22 +105,6 @@ fun HomeScreen(navController: NavController) {
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
-            Row(
-                modifier = Modifier
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                IconButton(
-                    onClick = { navController.navigate(Screens.ChatScreen.name) }
-                ) {
-                    Icon(Icons.Default.Close, contentDescription = "Skip")
-                }
-                IconButton(
-                    onClick = { navController.navigate(Screens.ChatScreen.name) }
-                ) {
-                    Icon(Icons.Default.Favorite, contentDescription = "Like")
-                }
-            }
         }
     }
 }
@@ -129,5 +112,5 @@ fun HomeScreen(navController: NavController) {
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(rememberNavController())
+    HomeScreen()
 }
