@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -49,9 +50,10 @@ fun ChangeProfile2(
 
     IconButton(onClick = onBackPressed) {
         Icon(
-            imageVector = Icons.Default.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             modifier = Modifier.padding(4.dp).size(40.dp),
-            contentDescription = "Back"
+            contentDescription = "Back",
+            tint = Color.Black
         )
     }
 
@@ -67,7 +69,8 @@ fun ChangeProfile2(
             text = "CHOOSE YOUR INTERESTS",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 16.dp),
+            color = Color.Black
         )
 
         Column(
@@ -102,7 +105,8 @@ fun ChangeProfile2(
                                 } else {
                                     selectedInterests + interest
                                 }
-                            }
+                            },
+                        color = Color.Black
                     )
                 }
             }

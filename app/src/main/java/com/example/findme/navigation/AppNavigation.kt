@@ -18,6 +18,8 @@ import androidx.compose.ui.res.painterResource
 import com.example.findme.screans.ProfileScreen
 import com.example.findme.screans.VideoChatScreen
 import com.example.findme.screans.ChangeProfile1
+import com.example.findme.screans.ChangeProfile2
+import com.example.findme.screans.ChangeProfile3
 import com.example.findme.screans.ChatScreen
 import com.example.findme.screans.HomeScreen
 import com.example.findme.screans.SettingsScreen
@@ -83,19 +85,15 @@ fun AppNavigation() {
                 )
             }
             composable(route = Screens.ChangeProfile1.name) {
-                ChangeProfile1(navController) {
-                    navController.popBackStack()
-                }
+                ChangeProfile1(navController, { navController.popBackStack() })
             }
             composable(route = Screens.ChangeProfile2.name) {
-                ChangeProfile1(navController) {
+                ChangeProfile2(navController) {
                     navController.popBackStack()
                 }
             }
             composable(route = Screens.ChangeProfile3.name) {
-                ChangeProfile1(navController) {
-                    navController.popBackStack()
-                }
+                ChangeProfile3(navController)
             }
         }
     }
