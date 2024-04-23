@@ -1,10 +1,9 @@
 package com.example.findme.main
 
-import android.app.Notification
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.example.findme.FbViewModel
+import com.example.findme.viewmodels.FbViewModel
 
 @Composable
 fun NotificationMessage(vm: FbViewModel) {
