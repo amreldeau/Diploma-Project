@@ -31,16 +31,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.findme.components.CButton
 import com.example.findme.components.CTextField
 import com.example.findme.ui.theme.AlegreyaFontFamily
 import com.example.findme.ui.theme.AlegreyaSansFontFamily
+import com.example.findme.viewmodels.FbViewModel
 
 @Composable
 fun SignupScreen(
@@ -51,6 +49,7 @@ fun SignupScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var fullName by remember { mutableStateOf("")}
     var errorE by remember { mutableStateOf(false) }
     var errorP by remember { mutableStateOf(false) }
     var plength by remember { mutableStateOf(false) }
@@ -126,7 +125,12 @@ fun SignupScreen(
 
 
                 CTextField(
-                    hint = "Full Name", value = "", keyboardOptions = KeyboardOptions(
+                    value = fullName,
+                    hint = "Full Name",
+                    onValueChange = {
+                        fullName = it
+                    },
+                    keyboardOptions = KeyboardOptions(
                         imeAction = ImeAction.Next
                     )
                 )
@@ -184,7 +188,7 @@ fun SignupScreen(
                         errorE = false
                         if (password.isNotEmpty()){
                             errorP = false
-                            vm.onSignup(email, password)
+                            vm.onSignup(email, password, fullName)
                         }
                         else {
                             errorP = true

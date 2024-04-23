@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.findme.main.NotificationMessage
 import com.example.findme.navigation.AppNavigation
 import com.example.findme.ui.theme.FindMeTheme
+import com.example.findme.viewmodels.FbViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
