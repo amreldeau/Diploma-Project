@@ -1,20 +1,15 @@
 package com.example.findme.viewmodels
 
-import android.content.ContentValues.TAG
 import android.util.Log
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.findme.data.UserProfile
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
 class ProfileViewModel: ViewModel() {
 
@@ -22,12 +17,20 @@ class ProfileViewModel: ViewModel() {
 
     init {
         getData()
+        getCurrentUserDocumentId()
     }
 
     private fun getData() {
         viewModelScope.launch {
             state.value = getDataFromFireStore()
         }
+    }
+
+    fun getCurrentUserDocumentId(): String? {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        return uid
     }
 }
 

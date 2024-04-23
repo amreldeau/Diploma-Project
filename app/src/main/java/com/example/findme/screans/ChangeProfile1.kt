@@ -1,5 +1,6 @@
 package com.example.findme.screans
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -36,27 +38,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
+import com.example.findme.viewmodels.ProfileViewModel
+import com.google.firebase.firestore.FirebaseFirestore
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangeProfile1(
     navController: NavController,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    profileViewModel: ProfileViewModel = viewModel()
 ) {
 
     var birthday by remember { mutableStateOf("") }
     var bio by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
+    val userId = profileViewModel.getCurrentUserDocumentId()
+
     IconButton(onClick = onBackPressed) {
         Icon(
-            imageVector = Icons.Default.ArrowBack,
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             modifier = Modifier.padding(4.dp).size(40.dp),
-            contentDescription = "Back"
+            contentDescription = "Back",
+            tint = Color.Black
         )
     }
 
@@ -71,10 +80,12 @@ fun ChangeProfile1(
         OutlinedTextField(
             value = birthday,
             onValueChange = { birthday = it },
-            label = { Text(
+            label = {
+                Text(
                         text = "Enter your birthday",
                         fontSize = 20.sp
-                    )},
+                )
+            },
             singleLine = true,
             shape = RoundedCornerShape(40.dp),
             colors = androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors(
@@ -89,10 +100,12 @@ fun ChangeProfile1(
         OutlinedTextField(
             value = bio,
             onValueChange = { bio = it },
-            label = { Text(
+            label = {
+                Text(
                         text = "Describe yourself (bio)",
                         fontSize = 20.sp
-                    )},
+                    )
+            },
             singleLine = true,
             shape = RoundedCornerShape(40.dp),
             colors = androidx.compose.material3.TextFieldDefaults.outlinedTextFieldColors(
@@ -115,6 +128,30 @@ fun ChangeProfile1(
             colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)), // Correct parameter name
             onClick = {
                 if (birthday.isNotEmpty() && bio.isNotEmpty()) {
+
+                    // Prepare the new data to be added
+                    val newData = hashMapOf(
+                        "birthday" to birthday,
+                        "bio" to bio
+                    )
+
+                    // Get a reference to the Firestore database
+                    val db = FirebaseFirestore.getInstance()
+
+                    // Reference to the user document
+                    val userDocumentRef = userId?.let { db.collection("users").document(it) }
+
+                    // Update the document with the new data
+                    if (userDocumentRef != null) {
+                        userDocumentRef.update(newData as Map<String, Any>)
+                            .addOnSuccessListener {
+                                Log.d("success", "DocumentSnapshot successfully updated!")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("error", "Error updating document", e)
+                            }
+                    }
+
                     navController.navigate(Screens.ChangeProfile2.name)
                 } else {
                     errorMessage = "Please fill in all fields"

@@ -46,7 +46,6 @@ import com.example.findme.ui.theme.Lato
 @Composable
 fun ChangeProfile3(
     navController: NavController,
-    onBackPressed: () -> Unit
 ) {
     var city by remember { mutableStateOf("") }
     var religion by remember { mutableStateOf("") }
@@ -195,5 +194,5 @@ private fun saveUserProfile(userProfile: UserProfile) {
 )
 @Composable
 fun ChangeProfile3Preview() {
-    ChangeProfile3(rememberNavController(), onBackPressed = {})
+    ChangeProfile3(rememberNavController())
 }
