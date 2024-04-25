@@ -68,7 +68,7 @@ fun HomeScreen() {
         ) {
 
             Text(
-                text = "Username, Age",
+                text = "",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = Modifier

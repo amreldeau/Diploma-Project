@@ -27,9 +27,9 @@ fun VideoChatScreen() {
     // Define your userToken, userId, and callId
     // val user = userRepository.getUser(userId)
     // val token = userRepository.getToken(userId)
-    val userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiQWhzb2thX1Rhbm8iLCJpc3MiOiJodHRwczovL3Byb250by5nZXRzdHJlYW0uaW8iLCJzdWIiOiJ1c2VyL0Foc29rYV9UYW5vIiwiaWF0IjoxNzEzNTYwOTUyLCJleHAiOjE3MTQxNjU3NTd9.BWwucSLmkWe1bdhN0hocKp0pY66wGz51i5E_i0mF4mM"
-    val userId = "Ahsoka_Tano"
-    val callId = "e6c3LOFVnJvS"
+    val userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiTGFuZG9fQ2Fscmlzc2lhbiIsImlzcyI6Imh0dHBzOi8vcHJvbnRvLmdldHN0cmVhbS5pbyIsInN1YiI6InVzZXIvTGFuZG9fQ2Fscmlzc2lhbiIsImlhdCI6MTcxMzg4NjIwMiwiZXhwIjoxNzE0NDkxMDA3fQ.NUJF8BEWvejq_m8UOss0xyKnd-gbjk7UdXtWdifIx7k"
+    val userId = "Lando_Calrissian"
+    val callId = "IoRS8iMzFnDZ"
 
     // Use LaunchedEffect to call joinCall when the Composable is first composed
     LaunchedEffect(Unit) {
