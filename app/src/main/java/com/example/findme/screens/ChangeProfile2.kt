@@ -1,4 +1,4 @@
-package com.example.findme.screans
+package com.example.findme.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
