@@ -1,7 +1,6 @@
 package com.example.findme.navigation
 
 import android.annotation.SuppressLint
-import android.app.Application
 import androidx.compose.foundation.Image
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -23,7 +22,6 @@ import com.example.findme.screens.ChangeProfile3
 import com.example.findme.screens.ChatScreen
 import com.example.findme.screens.HomeScreen
 import com.example.findme.screens.SettingsScreen
-import com.example.findme.viewmodels.VideoChatViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
