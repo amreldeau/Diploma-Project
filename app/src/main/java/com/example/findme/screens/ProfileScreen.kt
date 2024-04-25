@@ -1,4 +1,4 @@
-package com.example.findme.screans
+package com.example.findme.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
