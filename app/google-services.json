@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1090052621466",
+    "project_id": "fatedate-b8d82",
+    "storage_bucket": "fatedate-b8d82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090052621466:android:9f0be278b21d6a0c5d4b23",
+        "android_client_info": {
+          "package_name": "com.example.findme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUS2_InMpw00eSvS_LQCQmnqznkNAwwbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
