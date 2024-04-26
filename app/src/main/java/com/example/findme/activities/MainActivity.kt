@@ -1,4 +1,4 @@
-package com.example.findme
+package com.example.findme.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,8 +9,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.findme.R
 import com.example.findme.main.NotificationMessage
 import com.example.findme.navigation.AppNavigation
+import com.example.findme.screens.LoginScreen
+import com.example.findme.screens.SignupScreen
+import com.example.findme.screens.SuccessScreen
+import com.example.findme.screens.WelcomeScreen
 import com.example.findme.ui.theme.FindMeTheme
 import com.example.findme.viewmodels.FbViewModel
 import dagger.hilt.android.AndroidEntryPoint

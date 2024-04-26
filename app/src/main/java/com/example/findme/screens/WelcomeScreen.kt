@@ -1,4 +1,4 @@
-package com.example.findme
+package com.example.findme.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.findme.activities.DestinationScreen
+import com.example.findme.R
 import com.example.findme.components.CButton
 import com.example.findme.components.DontHaveAccountRow
 import com.example.findme.ui.theme.AlegreyaFontFamily
