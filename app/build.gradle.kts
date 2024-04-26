@@ -59,6 +59,9 @@ android {
 
 dependencies {
 
+    // chat dependencies
+    implementation("io.getstream:stream-chat-android-compose:6.0.8")
+
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
 
