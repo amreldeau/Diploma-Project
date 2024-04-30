@@ -30,25 +30,49 @@ import io.getstream.chat.android.compose.ui.theme.ChatTheme
 import io.getstream.chat.android.models.InitializationState
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ChatScreen() {
 
     val viewModel: ChatViewModel = viewModel()
+    val clientInitialisationState by viewModel.clientInitialisationState.collectAsState(initial = InitializationState.NOT_INITIALIZED)
 
-    val clientToBeProvidedToVCS by viewModel.clientToBeProvidedToVCS.collectAsState()
-
-
-    val clientInitialisationState by clientToBeProvidedToVCS?.clientState?.initializationState!!.collectAsState()
-
-
-    // Use LaunchedEffect to call joinCall when the Composable is first composed
-    LaunchedEffect(Unit) {
-        viewModel.connectUser()
+    ChatTheme {
+        when (clientInitialisationState) {
+            InitializationState.COMPLETE -> {
+                // Display your chat UI here
+                ChannelsScreen(
+                    title = stringResource(id = R.string.app_name),
+                    isShowingSearch = true,
+                    onItemClick = {},
+                    onBackPressed = {}
+                )
+                // You can navigate to a specific channel or display a list of channels
+            }
+            InitializationState.INITIALIZING -> {
+                Text(
+                    text = "Initialising...",
+                    color = Color.Black
+                )
+            }
+            InitializationState.NOT_INITIALIZED -> {
+                Text(
+                    text = "Not initialized...",
+                    color = Color.Black
+                )
+            }
+        }
     }
 
 
-    val scope = rememberCoroutineScope()
+    // Use LaunchedEffect to call connectUser when the Composable is first composed
+    /*LaunchedEffect(Unit) {
+        viewModel.connectUser()
+    }*/
+
+
+    /*val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(
         initialPage = INITIAL_SCREEN_INDEX
     ) {
@@ -66,32 +90,8 @@ fun ChatScreen() {
                 }
             }
         )
-        ChatTheme { // Theme wrapper
-            when (clientInitialisationState) {
-                InitializationState.COMPLETE -> {
-                    ChannelsScreen(
-                        title = stringResource(id = R.string.app_name),
-                        isShowingSearch = true,
-                        onItemClick = {},
-                        onBackPressed = {}
-                    )
-                }
-                InitializationState.INITIALIZING -> {
-                    Text(
-                        text = "Initialising...",
-                        color = Color.Black
-                    )
-                }
-                InitializationState.NOT_INITIALIZED -> {
-                    Text(
-                        text = "Not initialized...",
-                        color = Color.Black
-                    )
-                }
-            }
-        }
 
-        /*HorizontalPager(
+        HorizontalPager(
             modifier = Modifier.fillMaxSize(),
             state = pagerState
         ) { page ->
@@ -99,12 +99,6 @@ fun ChatScreen() {
                 0 -> Chats()
                 1 -> Friends()
             }
-        }*/
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ChatScreenPreview() {
-    ChatScreen()
+        }
+    }*/
 }
