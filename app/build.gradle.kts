@@ -61,6 +61,10 @@ dependencies {
 
     // chat dependencies
     implementation("io.getstream:stream-chat-android-compose:6.0.8")
+    implementation("io.getstream:stream-chat-android-offline:6.0.8")
+    implementation("androidx.compose.material:material-icons-extended:1.6.6")
+    // implementation("io.getstream:stream-chat-android-state:6.0.8")
+
 
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
