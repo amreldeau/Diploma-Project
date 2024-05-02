@@ -34,13 +34,13 @@ class FirebaseAuthentication: Application() {
             appContext = this // replaced this with "context"
         )
 
-        // Initialize the ChatClient
+        // 2 - Set up the client for API calls and with the plugin for offline storage
         chatClient = ChatClient.Builder("uun7ywwamhs9", applicationContext)
             .withPlugins(offlinePluginFactory, statePluginFactory)
             .logLevel(ChatLogLevel.ALL) // Set to NOTHING in prod
             .build()
 
-        // Authenticate and connect the user
+        // 3 - Authenticate and connect the user
         val user = User(
             id = "tutorial-droid",
             name = "Tutorial Droid",

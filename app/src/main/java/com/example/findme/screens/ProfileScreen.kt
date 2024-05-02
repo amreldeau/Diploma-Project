@@ -3,6 +3,7 @@ package com.example.findme.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.R
+import com.example.findme.components.AppBar
 import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
 import com.example.findme.viewmodels.ProfileViewModel
@@ -49,25 +51,16 @@ fun ProfileScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
 
+        AppBar()
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally // Align items to the center
+                .padding(start = 20.dp,top = 100.dp, end = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-//          LOGO
+            // LOGO
             Spacer(modifier = Modifier.size(40.dp))
-            Text(
-                text = stringResource(id = R.string.app_name),
-                color = Color.Black,
-                style = androidx.compose.ui.text.TextStyle(
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Center, // Center align text
-                    fontFamily = Lato,
-                    fontWeight = FontWeight.Black
-                )
-            )
 
 //          PROFILE IMG
             Spacer(modifier = Modifier.size(50.dp))
