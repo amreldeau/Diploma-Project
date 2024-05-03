@@ -19,6 +19,7 @@ import com.example.findme.screens.VideoChatScreen
 import com.example.findme.screens.ChangeProfile1
 import com.example.findme.screens.ChangeProfile2
 import com.example.findme.screens.ChangeProfile3
+import com.example.findme.screens.ChatMessagesScreen
 import com.example.findme.screens.ChatScreen
 import com.example.findme.screens.HomeScreen
 import com.example.findme.screens.SettingsScreen
@@ -67,7 +68,7 @@ fun AppNavigation() {
                 VideoChatScreen()
             }
             composable(route = Screens.ChatScreen.name){
-                ChatScreen()
+                ChatScreen(navController)
             }
             composable(route = Screens.ProfileScreen.name) {
                 ProfileScreen(
@@ -92,6 +93,12 @@ fun AppNavigation() {
             }
             composable(route = Screens.ChangeProfile3.name) {
                 ChangeProfile3(navController)
+            }
+            composable(route = "${Screens.ChatMessagesScreen.name}/{channelId}") { backStackEntry ->
+                val channelId = backStackEntry.arguments?.getString("channelId")
+                if (channelId != null) {
+                    ChatMessagesScreen(channelId, navController)
+                }
             }
         }
     }
