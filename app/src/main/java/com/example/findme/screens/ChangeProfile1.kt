@@ -127,30 +127,8 @@ fun ChangeProfile1(
             colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)), // Correct parameter name
             onClick = {
                 if (birthday.isNotEmpty() && bio.isNotEmpty()) {
-
-                    // Prepare the new data to be added
-                    val newData = hashMapOf(
-                        "birthday" to birthday,
-                        "bio" to bio
-                    )
-
-                    // Get a reference to the Firestore database
-                    val db = FirebaseFirestore.getInstance()
-
-                    // Reference to the user document
-                    val userDocumentRef = userId?.let { db.collection("users").document(it) }
-
-                    // Update the document with the new data
-                    if (userDocumentRef != null) {
-                        userDocumentRef.update(newData as Map<String, Any>)
-                            .addOnSuccessListener {
-                                Log.d("success", "DocumentSnapshot successfully updated!")
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w("error", "Error updating document", e)
-                            }
-                    }
-
+                    profileViewModel.updateBirthday(birthday)
+                    profileViewModel.updateBio(bio)
                     navController.navigate(Screens.ChangeProfile2.name)
                 } else {
                     errorMessage = "Please fill in all fields"

@@ -30,19 +30,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.data.UserProfile
 import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
-
-//import com.google.firebase.firestore.ktx.firestore
-//import com.google.firebase.ktx.Firebase
+import com.example.findme.viewmodels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangeProfile3(
     navController: NavController,
+    profileViewModel: ProfileViewModel = viewModel()
 ) {
     var city by remember { mutableStateOf("") }
     var religion by remember { mutableStateOf("") }
@@ -159,10 +159,13 @@ fun ChangeProfile3(
                 .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)), // Add this line
             colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)), // Correct parameter name
             onClick = {
-                // Save user profile data to Firebase
-                //saveUserProfile(UserProfile(city, religion, gender, work, company))
-
-                navController.navigate(Screens.ChangeProfile3.name)
+                profileViewModel.updateCity(city)
+                profileViewModel.updateReligion(religion)
+                profileViewModel.updateGender(gender)
+                profileViewModel.updateWork(work)
+                profileViewModel.updateCompany(company)
+                profileViewModel.saveUserProfile()
+                navController.navigate(Screens.ProfileScreen.name)
             },
         ) {
             Text(
@@ -177,12 +180,6 @@ fun ChangeProfile3(
             )
         }
     }
-}
-
-// firebase db
-private fun saveUserProfile(userProfile: UserProfile) {
-    //val db = Firebase.firestore
-    //db.collection("users").document().set(userProfile)
 }
 
 @Preview(

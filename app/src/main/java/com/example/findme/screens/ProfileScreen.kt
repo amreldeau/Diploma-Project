@@ -1,6 +1,7 @@
 package com.example.findme.screens
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,10 +50,7 @@ fun ProfileScreen(
     navController: NavController,
     profileViewModel: ProfileViewModel = viewModel()
 ) {
-    val getData = profileViewModel.state.value
-
-    val context = LocalContext.current
-
+    val getData = profileViewModel.userProfile.value
 
     var fullName: String by remember {
         mutableStateOf("")
@@ -61,11 +58,6 @@ fun ProfileScreen(
     var picUrl: String by remember {
         mutableStateOf("")
     }
-    var editFullName: String by remember {
-        mutableStateOf("")
-    }
-    var profilePicUrl by remember { mutableStateOf(picUrl) } // Initialize with the current picUrl
-
 
     LaunchedEffect(Unit) {
         // Actions to perform when LaunchedEffect enters the Composition
@@ -76,7 +68,6 @@ fun ProfileScreen(
 
                 fullName = it.get("username").toString()
                 picUrl = it.get("profile_picture").toString()
-                editFullName = fullName
             }
     }
 
@@ -97,7 +88,7 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.size(50.dp))
             ProfileImage(Uri.parse(picUrl)) {
                 //by usin it (the local file path for image) update the profile image
-                updateProfilePicture(it)
+                profileViewModel.updateProfilePicture(it)
             }
 
             Spacer(modifier = Modifier.size(40.dp))
@@ -208,28 +199,6 @@ fun ProfileScreen(
             }
         }
     }
-}
-
-private fun updateProfilePicture(uri: Uri) {
-    val riversRef = FirebaseStorage
-        .getInstance().
-        getReference(
-            "profile_pictures/${FirebaseAuth.getInstance().currentUser?.uid.toString()}")
-    val uploadTask = riversRef.putFile(uri)
-
-// Register observers to listen for when the download is done or if it fails
-    uploadTask.addOnFailureListener {
-        // Handle unsuccessful uploads
-    }.addOnSuccessListener { taskSnapshot ->
-        // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-        taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
-            FirebaseFirestore.getInstance().collection("users")
-                .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
-                .update("profile_picture", uri.toString())
-        }
-
-    }
-
 }
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
