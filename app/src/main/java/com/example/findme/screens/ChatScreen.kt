@@ -36,7 +36,9 @@ fun ChatScreen(navController: NavController) {
                         val c = it.cid
                         navController.navigate("${Screens.ChatMessagesScreen.name}/$c")
                     },
-                    onBackPressed = {}
+                    onBackPressed = {
+                        navController.popBackStack()
+                    }
                 )
                 // You can navigate to a specific channel or display a list of channels
             }
