@@ -2,6 +2,7 @@ package com.example.findme.data
 
 data class UserProfile(
     val username: String = "",
+    val profile_picture: String = "",
     val birthday: String = "",
     val bio: String = "",
     val city: String = "",

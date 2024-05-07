@@ -4,11 +4,17 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.findme.Event
+import com.google.common.eventbus.EventBus
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,36 +24,22 @@ class FbViewModel @Inject constructor(val auth: FirebaseAuth): ViewModel() {
     val inProgress = mutableStateOf(false)
     val popupNotification = mutableStateOf<Event<String>?>(null)
 
-    // Access a Cloud Firestore instance from your Activity
-    val db = Firebase.firestore
-
-    lateinit var username: String
+    fun logout() {
+        auth.signOut()
+        signedIn.value = false
+    }
 
     fun onSignup(email: String, pass: String, fullName: String) {
         inProgress.value = true
 
-        username = fullName
+        viewModelScope.launch {
+            MyEventBus.post(fullName)
+        }
 
         auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     signedIn.value = true
-
-                    // Create a new user with a first and last name
-                    val user = hashMapOf(
-                        "username" to username
-                    )
-
-                    // Add a new document with a generated ID
-                    db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener { documentReference ->
-                            Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w(TAG, "Error adding document", e)
-                        }
-
                     handleException(it.exception, "Signup Successful")
                 }
                 else {
@@ -77,5 +69,14 @@ class FbViewModel @Inject constructor(val auth: FirebaseAuth): ViewModel() {
         val errorMsg = exception?.localizedMessage ?: ""
         val message = if (customMessage.isEmpty()) errorMsg else "$customMessage: $errorMsg"
         popupNotification.value = Event(message)
+    }
+}
+
+object MyEventBus {
+    private val _events = MutableSharedFlow<String>()
+    val events = _events.asSharedFlow()
+
+    suspend fun post(event: String) {
+        _events.emit(event)
     }
 }
