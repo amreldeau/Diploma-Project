@@ -52,7 +52,7 @@ fun AuthenticationApp(){
     val firebaseUser = FirebaseAuth.getInstance().currentUser
     val startingScreen =
         if (firebaseUser == null){
-            DestinationScreen.Login.route
+            DestinationScreen.Main.route
         }else{
             DestinationScreen.Success.route
         }
