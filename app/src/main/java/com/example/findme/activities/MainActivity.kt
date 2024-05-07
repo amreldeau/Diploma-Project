@@ -12,12 +12,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.findme.R
 import com.example.findme.main.NotificationMessage
 import com.example.findme.navigation.AppNavigation
+import com.example.findme.navigation.Screens
 import com.example.findme.screens.LoginScreen
 import com.example.findme.screens.SignupScreen
 import com.example.findme.screens.SuccessScreen
 import com.example.findme.screens.WelcomeScreen
 import com.example.findme.ui.theme.FindMeTheme
 import com.example.findme.viewmodels.FbViewModel
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,9 +49,17 @@ fun AuthenticationApp(){
     val vm = hiltViewModel<FbViewModel>()
     val navController = rememberNavController()
 
+    val firebaseUser = FirebaseAuth.getInstance().currentUser
+    val startingScreen =
+        if (firebaseUser == null){
+            DestinationScreen.Login.route
+        }else{
+            DestinationScreen.Success.route
+        }
+
     NotificationMessage(vm)
 
-    NavHost(navController = navController, startDestination = DestinationScreen.Main.route) {
+    NavHost(navController = navController, startDestination = startingScreen) {
         composable(DestinationScreen.Main.route) {
             WelcomeScreen(navController)
         }
