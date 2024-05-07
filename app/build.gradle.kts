@@ -59,6 +59,9 @@ android {
 
 dependencies {
 
+    // for image loading in profile screen
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     // chat dependencies
     implementation("io.getstream:stream-chat-android-compose:6.0.8")
     implementation("io.getstream:stream-chat-android-offline:6.0.8")
@@ -72,6 +75,7 @@ dependencies {
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
 
     // Stream Video Compose SDK
     implementation("io.getstream:stream-video-android-ui-compose:0.4.3")
