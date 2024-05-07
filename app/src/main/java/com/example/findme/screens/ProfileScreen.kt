@@ -11,12 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +39,9 @@ import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
 import com.example.findme.viewmodels.ProfileViewModel
 import com.example.findme.widgets.ProfileImage
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 
 @Composable
@@ -52,11 +54,30 @@ fun ProfileScreen(
 
     val context = LocalContext.current
 
+
+    var fullName: String by remember {
+        mutableStateOf("")
+    }
     var picUrl: String by remember {
         mutableStateOf("")
     }
-    var editMode by remember {
-        mutableStateOf(false)
+    var editFullName: String by remember {
+        mutableStateOf("")
+    }
+    var profilePicUrl by remember { mutableStateOf(picUrl) } // Initialize with the current picUrl
+
+
+    LaunchedEffect(Unit) {
+        // Actions to perform when LaunchedEffect enters the Composition
+        FirebaseFirestore.getInstance().collection("users")
+            .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
+            .get()
+            .addOnSuccessListener {
+
+                fullName = it.get("username").toString()
+                picUrl = it.get("profile_picture").toString()
+                editFullName = fullName
+            }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -75,7 +96,8 @@ fun ProfileScreen(
             // PROFILE IMG
             Spacer(modifier = Modifier.size(50.dp))
             ProfileImage(Uri.parse(picUrl)) {
-                ///TODO: by usin it (the local file path for image) update the profile image
+                //by usin it (the local file path for image) update the profile image
+                updateProfilePicture(it)
             }
 
             Spacer(modifier = Modifier.size(40.dp))
@@ -92,43 +114,16 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.size(50.dp))
 
-            // EDIT PROFILE BUTTON
             Button(
-                onClick = {
-                    editMode = !editMode
-                },
+                onClick = { /*TODO*/ },
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
-                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)),
+                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)), // Add this line
                 colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5))
             ) {
                 Text(
-                    text = if (!editMode) "Edit Profile" else "Save",
-                    color = Color.White,
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center, // Center align text
-                        fontFamily = Lato,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-
-            // SETTINGS BUTT
-            Spacer(modifier = Modifier.size(30.dp))
-            Button(
-                onClick = onSettingsClicked,
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(50.dp)
-                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)),
-                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
-            )
-            {
-                //Button text
-                Text(
-                    text = "SETTINGS",
+                    text = "VIEW PROFILE",
                     color = Color.White,
                     style = androidx.compose.ui.text.TextStyle(
                         fontSize = 20.sp,
@@ -163,9 +158,35 @@ fun ProfileScreen(
                 )
             }
 
+            // SETTINGS BUTT
+            Spacer(modifier = Modifier.size(30.dp))
+            Button(
+                onClick = onSettingsClicked,
+                modifier = Modifier
+                    .width(280.dp)
+                    .height(50.dp)
+                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)),
+                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
+            )
+            {
+                //Button text
+                Text(
+                    text = "SETTINGS",
+                    color = Color.White,
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 20.sp,
+                        textAlign = TextAlign.Center, // Center align text
+                        fontFamily = Lato,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+
+            // LOG OUT BUTT
             Spacer(modifier = Modifier.size(30.dp))
             Button(
                 onClick = {
+                    FirebaseAuth.getInstance().signOut()
                     navController.navigate(DestinationScreen.Main.route)
                 },
                 modifier = Modifier
@@ -187,6 +208,28 @@ fun ProfileScreen(
             }
         }
     }
+}
+
+private fun updateProfilePicture(uri: Uri) {
+    val riversRef = FirebaseStorage
+        .getInstance().
+        getReference(
+            "profile_pictures/${FirebaseAuth.getInstance().currentUser?.uid.toString()}")
+    val uploadTask = riversRef.putFile(uri)
+
+// Register observers to listen for when the download is done or if it fails
+    uploadTask.addOnFailureListener {
+        // Handle unsuccessful uploads
+    }.addOnSuccessListener { taskSnapshot ->
+        // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+        taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+            FirebaseFirestore.getInstance().collection("users")
+                .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                .update("profile_picture", uri.toString())
+        }
+
+    }
+
 }
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
