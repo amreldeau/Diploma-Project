@@ -57,8 +57,6 @@ fun ChangeProfile1(
     var bio by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
 
-    val userId = profileViewModel.getCurrentUserDocumentId()
-
     IconButton(onClick = onBackPressed) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
