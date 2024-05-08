@@ -2,12 +2,15 @@ package com.example.findme.navigation
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -57,47 +60,49 @@ fun AppNavigation() {
             }
         }
     ) {paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = Screens.HomeScreen.name
-        ){
-            composable(route = Screens.HomeScreen.name){
-                HomeScreen()
-            }
-            composable(route = Screens.VideoChatScreen.name){
-                VideoChatScreen()
-            }
-            composable(route = Screens.ChatScreen.name){
-                ChatScreen(navController)
-            }
-            composable(route = Screens.ProfileScreen.name) {
-                ProfileScreen(
-                    { navController.navigate(Screens.SettingsScreen.name) },
-                    navController
-                )
-            }
-            composable(route = Screens.SettingsScreen.name) {
-                SettingsScreen(
-                    onBackPressed = {
+        Box(modifier = Modifier.padding(paddingValues)) {
+            NavHost(
+                navController = navController,
+                startDestination = Screens.HomeScreen.name
+            ) {
+                composable(route = Screens.HomeScreen.name) {
+                    HomeScreen()
+                }
+                composable(route = Screens.VideoChatScreen.name) {
+                    VideoChatScreen()
+                }
+                composable(route = Screens.ChatScreen.name) {
+                    ChatScreen(navController)
+                }
+                composable(route = Screens.ProfileScreen.name) {
+                    ProfileScreen(
+                        { navController.navigate(Screens.SettingsScreen.name) },
+                        navController
+                    )
+                }
+                composable(route = Screens.SettingsScreen.name) {
+                    SettingsScreen(
+                        onBackPressed = {
+                            navController.popBackStack()
+                        }
+                    )
+                }
+                composable(route = Screens.ChangeProfile1.name) {
+                    ChangeProfile1(navController, { navController.popBackStack() })
+                }
+                composable(route = Screens.ChangeProfile2.name) {
+                    ChangeProfile2(navController) {
                         navController.popBackStack()
                     }
-                )
-            }
-            composable(route = Screens.ChangeProfile1.name) {
-                ChangeProfile1(navController, { navController.popBackStack() })
-            }
-            composable(route = Screens.ChangeProfile2.name) {
-                ChangeProfile2(navController) {
-                    navController.popBackStack()
                 }
-            }
-            composable(route = Screens.ChangeProfile3.name) {
-                ChangeProfile3(navController)
-            }
-            composable(route = "${Screens.ChatMessagesScreen.name}/{channelId}") { backStackEntry ->
-                val channelId = backStackEntry.arguments?.getString("channelId")
-                if (channelId != null) {
-                    ChatMessagesScreen(channelId, navController)
+                composable(route = Screens.ChangeProfile3.name) {
+                    ChangeProfile3(navController)
+                }
+                composable(route = "${Screens.ChatMessagesScreen.name}/{channelId}") { backStackEntry ->
+                    val channelId = backStackEntry.arguments?.getString("channelId")
+                    if (channelId != null) {
+                        ChatMessagesScreen(channelId, navController)
+                    }
                 }
             }
         }

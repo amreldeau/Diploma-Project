@@ -1,7 +1,6 @@
 package com.example.findme.screens
 
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -41,7 +40,6 @@ import com.example.findme.viewmodels.ProfileViewModel
 import com.example.findme.widgets.ProfileImage
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 
 
 @Composable
@@ -71,27 +69,26 @@ fun ProfileScreen(
             }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
 
         AppBar()
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, top = 100.dp, end = 20.dp),
+                .padding(start = 20.dp, top = 120.dp, end = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // LOGO
-            Spacer(modifier = Modifier.size(40.dp))
 
             // PROFILE IMG
-            Spacer(modifier = Modifier.size(50.dp))
             ProfileImage(Uri.parse(picUrl)) {
                 //by usin it (the local file path for image) update the profile image
                 profileViewModel.updateProfilePicture(it)
             }
 
-            Spacer(modifier = Modifier.size(40.dp))
+            Spacer(modifier = Modifier.size(20.dp))
             Text(
                 text = getData.username,
                 color = Color.Black,
@@ -103,8 +100,7 @@ fun ProfileScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.size(50.dp))
-
+            Spacer(modifier = Modifier.size(30.dp))
             Button(
                 onClick = { /*TODO*/ },
                 modifier = Modifier
@@ -114,7 +110,7 @@ fun ProfileScreen(
                 colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5))
             ) {
                 Text(
-                    text = "VIEW PROFILE",
+                    text = "View Profile",
                     color = Color.White,
                     style = androidx.compose.ui.text.TextStyle(
                         fontSize = 20.sp,
@@ -126,7 +122,7 @@ fun ProfileScreen(
             }
 
             // EDIT PROFILE BUTT
-            Spacer(modifier = Modifier.size(30.dp))
+            Spacer(modifier = Modifier.size(20.dp))
             Button(
                 onClick = { navController.navigate(Screens.ChangeProfile1.name) },
                 modifier = Modifier
@@ -138,7 +134,7 @@ fun ProfileScreen(
             {
                 //Button text
                 Text(
-                    text = "EDIT PROFILE",
+                    text = "Edit Profile",
                     color = Color.White,
                     style = androidx.compose.ui.text.TextStyle(
                         fontSize = 20.sp,
@@ -150,7 +146,7 @@ fun ProfileScreen(
             }
 
             // SETTINGS BUTT
-            Spacer(modifier = Modifier.size(30.dp))
+            Spacer(modifier = Modifier.size(20.dp))
             Button(
                 onClick = onSettingsClicked,
                 modifier = Modifier
@@ -162,7 +158,7 @@ fun ProfileScreen(
             {
                 //Button text
                 Text(
-                    text = "SETTINGS",
+                    text = "Settings",
                     color = Color.White,
                     style = androidx.compose.ui.text.TextStyle(
                         fontSize = 20.sp,
@@ -174,7 +170,7 @@ fun ProfileScreen(
             }
 
             // LOG OUT BUTT
-            Spacer(modifier = Modifier.size(30.dp))
+            Spacer(modifier = Modifier.size(20.dp))
             Button(
                 onClick = {
                     FirebaseAuth.getInstance().signOut()
@@ -187,7 +183,7 @@ fun ProfileScreen(
                 colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5))
             ) {
                 Text(
-                    text = "LOG OUT",
+                    text = "Log Out",
                     color = Color.White,
                     style = androidx.compose.ui.text.TextStyle(
                         fontSize = 20.sp,
