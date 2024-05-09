@@ -59,6 +59,9 @@ android {
 
 dependencies {
 
+    // home screen's swipeable cards
+    implementation("com.alexstyl.swipeablecard:swipeablecard:0.1.0")
+
     // for image loading in profile screen
     implementation("io.coil-kt:coil-compose:2.4.0")
 

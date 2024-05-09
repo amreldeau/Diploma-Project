@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.eidarulu.findme" />
+                  <option name="mobileSdkAppId" value="1:1090052621466:android:9f0be278b21d6a0c5d4b23" />
+                  <option name="projectId" value="fatedate-b8d82" />
+                  <option name="projectNumber" value="1090052621466" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
