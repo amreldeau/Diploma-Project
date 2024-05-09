@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Favorite
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -50,6 +52,7 @@ import com.alexstyl.swipeablecard.Direction
 import com.alexstyl.swipeablecard.ExperimentalSwipeableCardApi
 import com.alexstyl.swipeablecard.rememberSwipeableCardState
 import com.alexstyl.swipeablecard.swipableCard
+import com.eidarulu.findme.components.AppBar
 import com.eidarulu.findme.data.MatchProfile
 import com.eidarulu.findme.data.profiles
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -59,16 +62,19 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSwipeableCardApi::class)
 @Composable
 fun HomeScreen() {
-    TransparentSystemBars()
+    AppBar()
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Brush.verticalGradient(
-                listOf(
-                    Color(0xfff68084),
-                    Color(0xffa6c0fe),
+            .background(
+                Brush.verticalGradient(
+                    listOf(
+                        Color(0xff1e3e22),
+                        Color(0xff285c2f),
+                        Color(0xff3fc05a)
+                    )
                 )
-            ))
+            )
             .systemBarsPadding()
     ) {
         Box {
@@ -81,11 +87,12 @@ fun HomeScreen() {
             Hint(hint)
 
             val scope = rememberCoroutineScope()
-            Box(Modifier
-                .padding(24.dp)
-                .fillMaxSize()
-                .aspectRatio(1f)
-                .align(Alignment.Center)
+            Box(
+                Modifier
+                    .padding(24.dp)
+                    .fillMaxSize()
+                    .aspectRatio(1f)
+                    .align(Alignment.Center)
             ) {
                 states.forEach { (matchProfile, state) ->
                     if (state.swipedDirection == null) {
@@ -115,10 +122,11 @@ fun HomeScreen() {
                     }
                 }
             }
-            Row(Modifier
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = 24.dp, vertical = 32.dp)
-                .fillMaxWidth(),
+            Row(
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = 24.dp, vertical = 32.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 CircleButton(
@@ -161,7 +169,8 @@ private fun CircleButton(
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.background)
             .size(56.dp)
-            .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape),
+            .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape)
+            .shadow(elevation = 55.dp, shape = RoundedCornerShape(50.dp)),
         onClick = onClick
     ) {
         Icon(
@@ -179,17 +188,20 @@ private fun ProfileCard(
 ) {
     Card(modifier) {
         Box {
-            Image(contentScale = ContentScale.Crop,
+            Image(
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
                 painter = painterResource(matchProfile.drawableResId),
-                contentDescription = null)
+                contentDescription = null
+            )
             Scrim(Modifier.align(Alignment.BottomCenter))
             Column(Modifier.align(Alignment.BottomStart)) {
                 Text(text = matchProfile.name,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier.padding(10.dp))
+                    modifier = Modifier.padding(10.dp)
+                )
             }
         }
     }
@@ -205,7 +217,7 @@ private fun Hint(text: String) {
     ) {
         Text(
             text = text,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onSecondary,
             fontWeight = FontWeight.Bold,
             fontSize = 22.sp,
             textAlign = TextAlign.Center
@@ -239,10 +251,11 @@ private fun stringFrom(direction: Direction): String {
 
 @Composable
 fun Scrim(modifier: Modifier = Modifier) {
-    Box(modifier
-        .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
-        .height(180.dp)
-        .fillMaxWidth())
+    Box(
+        modifier
+            .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
+            .height(180.dp)
+            .fillMaxWidth())
 }
 
 @Preview(showBackground = true, widthDp = 320, heightDp = 640)
