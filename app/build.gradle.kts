@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.findme"
+    namespace = "com.eidarulu.findme"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.findme"
+        applicationId = "com.eidarulu.findme"
         minSdk = 30
         targetSdk = 34
         versionCode = 1
