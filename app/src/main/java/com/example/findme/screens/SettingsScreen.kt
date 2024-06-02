@@ -1,23 +1,13 @@
 package com.example.findme.screens
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -28,13 +18,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.findme.navigation.Screens
 import com.example.findme.ui.theme.Lato
+import com.example.findme.viewmodels.ThemeViewModel
 
 @Composable
-fun SettingsScreen(onBackPressed: () -> Unit) {
+fun SettingsScreen(onBackPressed: () -> Unit, themeViewModel: ThemeViewModel = viewModel()) {
     Box(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -69,21 +61,19 @@ fun SettingsScreen(onBackPressed: () -> Unit) {
             }
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { themeViewModel.toggleTheme() },
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
-                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)), // Add this line
-                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
-            )
-            {
-                //Button text
+                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)),
+                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5))
+            ) {
                 Text(
                     text = "CHANGE THEME",
                     color = Color.White,
                     style = TextStyle(
                         fontSize = 20.sp,
-                        textAlign = TextAlign.Center, // Center align text
+                        textAlign = TextAlign.Center,
                         fontFamily = Lato,
                         fontWeight = FontWeight.Bold
                     )
@@ -95,17 +85,15 @@ fun SettingsScreen(onBackPressed: () -> Unit) {
                 modifier = Modifier
                     .width(280.dp)
                     .height(50.dp)
-                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)), // Add this line
-                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5)) // Correct parameter name
-            )
-            {
-                //Button text
+                    .shadow(elevation = 15.dp, shape = RoundedCornerShape(20.dp)),
+                colors = ButtonDefaults.buttonColors(Color(0xFF59C9A5))
+            ) {
                 Text(
                     text = "SELECT LANGUAGE",
                     color = Color.White,
                     style = TextStyle(
                         fontSize = 20.sp,
-                        textAlign = TextAlign.Center, // Center align text
+                        textAlign = TextAlign.Center,
                         fontFamily = Lato,
                         fontWeight = FontWeight.Bold
                     )
@@ -115,11 +103,11 @@ fun SettingsScreen(onBackPressed: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 640)
-@Composable
-fun ProfileScreenPreview(navController: NavController = rememberNavController()) {
-    ProfileScreen(
-        { navController.navigate(Screens.SettingsScreen.name) },
-        navController
-    )
-}
+//@Preview(showBackground = true, widthDp = 320, heightDp = 640)
+//@Composable
+//fun SettingsScreenPreview(navController: NavController = rememberNavController()) {
+//    SettingsScreen(
+//        { navController.navigate(Screens.SettingsScreen.name) },
+//        navController
+//    )
+//}

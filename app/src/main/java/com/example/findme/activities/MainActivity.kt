@@ -21,6 +21,8 @@ import com.example.findme.ui.theme.FindMeTheme
 import com.example.findme.viewmodels.FbViewModel
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import com.example.findme.viewmodels.ThemeViewModel
+import androidx.compose.runtime.collectAsState
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -30,8 +32,10 @@ class MainActivity : ComponentActivity() {
             window.statusBarColor = getColor(R.color.black)
             window.navigationBarColor = getColor(R.color.black)
 
-            FindMeTheme {
-                AuthenticationApp()
+            val themeViewModel: ThemeViewModel = hiltViewModel()
+
+            FindMeTheme(isDarkTheme = themeViewModel.isDarkTheme.collectAsState().value) {
+                AuthenticationApp(themeViewModel)
             }
         }
     }
@@ -45,9 +49,10 @@ sealed class DestinationScreen(val route: String) {
 }
 
 @Composable
-fun AuthenticationApp(){
+fun AuthenticationApp(themeViewModel: ThemeViewModel){
     val vm = hiltViewModel<FbViewModel>()
     val navController = rememberNavController()
+    val themeViewModel: ThemeViewModel = hiltViewModel()
 
     val firebaseUser = FirebaseAuth.getInstance().currentUser
     val startingScreen =
@@ -78,5 +83,6 @@ fun AuthenticationApp(){
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
-    AppNavigation()
+    val themeViewModel: ThemeViewModel = hiltViewModel()
+    AppNavigation(themeViewModel)
 }

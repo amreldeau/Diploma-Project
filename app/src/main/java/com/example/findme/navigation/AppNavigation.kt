@@ -26,12 +26,15 @@ import com.example.findme.screens.ChatMessagesScreen
 import com.example.findme.screens.ChatScreen
 import com.example.findme.screens.HomeScreen
 import com.example.findme.screens.SettingsScreen
+import com.example.findme.viewmodels.ThemeViewModel
+import androidx.compose.runtime.collectAsState
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
-fun AppNavigation() {
+fun AppNavigation(themeViewModel: ThemeViewModel) {
     val navController = rememberNavController()
+    val isDarkTheme = themeViewModel.isDarkTheme.collectAsState().value
 
     Scaffold(
         bottomBar = {
@@ -84,7 +87,8 @@ fun AppNavigation() {
                     SettingsScreen(
                         onBackPressed = {
                             navController.popBackStack()
-                        }
+                        },
+                        themeViewModel = themeViewModel
                     )
                 }
                 composable(route = Screens.ChangeProfile1.name) {

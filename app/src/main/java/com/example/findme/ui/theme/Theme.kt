@@ -1,46 +1,36 @@
 package com.example.findme.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.collectAsState
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.platform.LocalView
-import androidx.core.view.WindowCompat
+import com.example.findme.viewmodels.ThemeViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorScheme = darkColorScheme(
-
-    primary = Gray,
-    secondary = LightGray,
-    background = LightGray,
-    tertiary = White
+    primary = DarkGreen,
+    secondary = DarkLightGreen,
+    background = DarkGray,
+    tertiary = DarkHighlightGreen
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Green,
     secondary = LightGreen,
-    background = White,
-    tertiary = White
+    background = Color.White,
+    tertiary = HighlightGreen
 )
 
 @Composable
 fun FindMeTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorSchema = if (darkTheme){
+    val colorScheme = if (isDarkTheme) {
         DarkColorScheme
     } else {
         LightColorScheme
@@ -49,30 +39,30 @@ fun FindMeTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         val systemUiController = rememberSystemUiController()
-        val statusBarColor = if (isSystemInDarkTheme()){
-            Gray
+        val statusBarColor = if (isDarkTheme) {
+            DarkGreen
         } else {
             Green
         }
 
-        val navigationBarColor = if (isSystemInDarkTheme()){
-            LightGray
+        val navigationBarColor = if (isDarkTheme) {
+            DarkGray
         } else {
-            White
+            Color.White
         }
 
         SideEffect {
             systemUiController.setStatusBarColor(
-                statusBarColor
+                color = statusBarColor
             )
             systemUiController.setNavigationBarColor(
-                navigationBarColor
+                color = navigationBarColor
             )
         }
     }
 
     MaterialTheme(
-        colorScheme = colorSchema,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )
