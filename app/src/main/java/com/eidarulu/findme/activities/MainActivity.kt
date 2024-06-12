@@ -11,10 +11,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.eidarulu.findme.main.NotificationMessage
 import com.eidarulu.findme.navigation.AppNavigation
-import com.eidarulu.findme.screens.LoginScreen
-import com.eidarulu.findme.screens.SignupScreen
-import com.eidarulu.findme.screens.SuccessScreen
-import com.eidarulu.findme.screens.WelcomeScreen
+import com.eidarulu.findme.ui.login.LoginScreen
+import com.eidarulu.findme.ui.signup.SignupScreen
+import com.eidarulu.findme.ui.entry_point.SuccessScreen
+import com.eidarulu.findme.ui.welcome.WelcomeScreen
 import com.eidarulu.findme.ui.theme.FindMeTheme
 import com.eidarulu.findme.viewmodels.FbViewModel
 import com.eidarulu.findme.R

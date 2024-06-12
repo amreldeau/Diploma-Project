@@ -17,15 +17,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.res.painterResource
-import com.eidarulu.findme.screens.ProfileScreen
-import com.eidarulu.findme.screens.VideoChatScreen
-import com.eidarulu.findme.screens.ChangeProfile1
-import com.eidarulu.findme.screens.ChangeProfile2
-import com.eidarulu.findme.screens.ChangeProfile3
-import com.eidarulu.findme.screens.ChatMessagesScreen
-import com.eidarulu.findme.screens.ChatScreen
-import com.eidarulu.findme.screens.HomeScreen
-import com.eidarulu.findme.screens.SettingsScreen
+import com.eidarulu.findme.ui.profile.ProfileScreen
+import com.eidarulu.findme.ui.videochat.VideoChatScreen
+import com.eidarulu.findme.ui.change_profile_1.ChangeProfile1
+import com.eidarulu.findme.ui.change_profile_2.ChangeProfile2
+import com.eidarulu.findme.ui.change_profile_3.ChangeProfile3
+import com.eidarulu.findme.ui.chat.ChatMessagesScreen
+import com.eidarulu.findme.ui.chat_list.ChatScreen
+import com.eidarulu.findme.ui.home.HomeScreen
+import com.eidarulu.findme.ui.settings.SettingsScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
