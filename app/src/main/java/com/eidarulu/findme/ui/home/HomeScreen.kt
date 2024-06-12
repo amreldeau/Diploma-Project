@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -62,26 +64,28 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalSwipeableCardApi::class)
 @Composable
 fun HomeScreen() {
-    AppBar()
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                Brush.verticalGradient(
-                    listOf(
-                        Color(0xff1e3e22),
-                        Color(0xff285c2f),
-                        Color(0xff3fc05a)
-                    )
+                Brush.radialGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        Color(0xff4682b4),
+                        Color(0xff3f888f)
+                    ),
+                    center = Offset(0.9f, 0.4f),
+                    radius = 8000f
                 )
             )
             .systemBarsPadding()
     ) {
+        //AppBar()
         Box {
             val states = profiles.reversed()
                 .map { it to rememberSwipeableCardState() }
             var hint by remember {
-                mutableStateOf("Swipe a card or press a button below")
+                mutableStateOf("Discover People!")
             }
 
             Hint(hint)
@@ -89,9 +93,9 @@ fun HomeScreen() {
             val scope = rememberCoroutineScope()
             Box(
                 Modifier
-                    .padding(24.dp)
+                    .padding(16.dp)
                     .fillMaxSize()
-                    .aspectRatio(1f)
+                    .aspectRatio(0.75f)
                     .align(Alignment.Center)
             ) {
                 states.forEach { (matchProfile, state) ->
@@ -109,7 +113,7 @@ fun HomeScreen() {
                                     },
                                     onSwipeCancel = {
                                         Log.d("Swipeable-Card", "Cancelled swipe")
-                                        hint = "You canceled the swipe"
+                                        hint = "Changed your mind? No worries."
                                     }
                                 ),
                             matchProfile = matchProfile
@@ -117,7 +121,7 @@ fun HomeScreen() {
                     }
                     LaunchedEffect(matchProfile, state.swipedDirection) {
                         if (state.swipedDirection != null) {
-                            hint = "You swiped ${stringFrom(state.swipedDirection!!)}"
+                            hint = "${stringFrom(state.swipedDirection!!)}"
                         }
                     }
                 }
@@ -127,7 +131,7 @@ fun HomeScreen() {
                     .align(Alignment.BottomCenter)
                     .padding(horizontal = 24.dp, vertical = 32.dp)
                     .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.Center
             ) {
                 CircleButton(
                     onClick = {
@@ -141,6 +145,7 @@ fun HomeScreen() {
                     },
                     icon = Icons.Rounded.Close
                 )
+                Spacer(modifier = Modifier.width(24.dp))
                 CircleButton(
                     onClick = {
                         scope.launch {
@@ -167,10 +172,12 @@ private fun CircleButton(
     IconButton(
         modifier = Modifier
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.surface) // Use surface for better contrast
             .size(56.dp)
             .border(2.dp, MaterialTheme.colorScheme.outline, CircleShape)
-            .shadow(elevation = 55.dp, shape = RoundedCornerShape(50.dp)),
+            .shadow(elevation = 50.dp, shape = CircleShape) // Increased elevation
+            .background(MaterialTheme.colorScheme.background) // Apply background again for clear definition
+            .padding(4.dp), // Padding to avoid clipping shadow
         onClick = onClick
     ) {
         Icon(
@@ -197,7 +204,7 @@ private fun ProfileCard(
             Scrim(Modifier.align(Alignment.BottomCenter))
             Column(Modifier.align(Alignment.BottomStart)) {
                 Text(text = matchProfile.name,
-                    color = MaterialTheme.colorScheme.primary,
+                    color = Color.White,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(10.dp)
@@ -212,7 +219,7 @@ private fun Hint(text: String) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .padding(horizontal = 24.dp, vertical = 32.dp)
+            .padding(top = 48.dp)
             .fillMaxWidth()
     ) {
         Text(
@@ -242,10 +249,10 @@ private fun TransparentSystemBars() {
 
 private fun stringFrom(direction: Direction): String {
     return when (direction) {
-        Direction.Left -> "Left 👈"
-        Direction.Right -> "Right 👉"
-        Direction.Up -> "Up 👆"
-        Direction.Down -> "Down 👇"
+        Direction.Left -> "❌ Not feeling it? That's okay!"
+        Direction.Right -> "💖 Nice choice!"
+        Direction.Up -> "\uD83D\uDC96 Nice choice!"
+        Direction.Down -> "❌ Not feeling it? That's okay!"
     }
 }
 
