@@ -31,13 +31,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.eidarulu.findme.activities.DestinationScreen
 import com.eidarulu.findme.R
 import com.eidarulu.findme.components.CButton
 import com.eidarulu.findme.components.CTextField
 import com.eidarulu.findme.ui.theme.AlegreyaFontFamily
 import com.eidarulu.findme.ui.theme.AlegreyaSansFontFamily
 import com.eidarulu.findme.components.DontHaveAccountRow
+import com.eidarulu.findme.navigation.Screens
 import com.eidarulu.findme.viewmodels.FbViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -168,7 +168,7 @@ fun LoginScreen(
                 )
 
                 if (vm.signedIn.value) {
-                    navController.navigate(DestinationScreen.Success.route)
+                    navController.navigate(Screens.HomeScreen.name)
                 }
                 vm.signedIn.value = false
 

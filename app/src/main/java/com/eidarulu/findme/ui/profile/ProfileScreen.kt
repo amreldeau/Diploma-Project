@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.eidarulu.findme.activities.DestinationScreen
 import com.eidarulu.findme.components.AppBar
 import com.eidarulu.findme.navigation.Screens
 import com.eidarulu.findme.ui.theme.Lato
@@ -173,7 +172,7 @@ fun ProfileScreen(
             Button(
                 onClick = {
                     FirebaseAuth.getInstance().signOut()
-                    navController.navigate(DestinationScreen.Main.route)
+                    navController.navigate(Screens.WelcomeScreen.name)
                 },
                 modifier = Modifier
                     .width(280.dp)

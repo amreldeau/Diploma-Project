@@ -3,6 +3,7 @@ package com.eidarulu.findme.navigation
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,6 +18,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.res.painterResource
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.eidarulu.findme.main.NotificationMessage
 import com.eidarulu.findme.ui.profile.ProfileScreen
 import com.eidarulu.findme.ui.videochat.VideoChatScreen
 import com.eidarulu.findme.ui.change_profile_1.ChangeProfile1
@@ -25,37 +28,56 @@ import com.eidarulu.findme.ui.change_profile_3.ChangeProfile3
 import com.eidarulu.findme.ui.chat.ChatMessagesScreen
 import com.eidarulu.findme.ui.chat_list.ChatScreen
 import com.eidarulu.findme.ui.home.HomeScreen
+import com.eidarulu.findme.ui.login.LoginScreen
 import com.eidarulu.findme.ui.settings.SettingsScreen
+import com.eidarulu.findme.ui.signup.SignupScreen
+import com.eidarulu.findme.ui.welcome.WelcomeScreen
+import com.eidarulu.findme.viewmodels.FbViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
 @Composable
 fun AppNavigation() {
+    val vm = hiltViewModel<FbViewModel>()
     val navController = rememberNavController()
+
+    val firebaseUser = FirebaseAuth.getInstance().currentUser
+    val startingScreen =
+        if (firebaseUser == null){
+            Screens.WelcomeScreen.name
+        }else{
+            Screens.WelcomeScreen.name
+        }
+
+    NotificationMessage(vm)
 
     Scaffold(
         bottomBar = {
-            NavigationBar{
-                val navBackStackEntry = navController.currentBackStackEntryAsState().value
-                val currentDestination = navBackStackEntry?.destination
+            val navBackStackEntry = navController.currentBackStackEntryAsState().value
+            val currentDestination = navBackStackEntry?.destination
+            val currentRoute = currentDestination?.route
 
-                listOfNavItems.forEach { navItem: NavItem ->
-                    NavigationBarItem(
-                        selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
-                        onClick = {
-                            navController.navigate(navItem.route)
-                        },
-                        icon = {
-                            Image(
-                                painter = painterResource(id = navItem.icon),
-                                contentDescription = null)
-                        },
-                        label = {
-                            Text(
-                                navItem.label
-                            )
-                        }
-                    )
+            if (currentRoute !in listOf(Screens.WelcomeScreen.name, Screens.LoginScreen.name, Screens.SignupScreen.name)) {
+                NavigationBar {
+                    listOfNavItems.forEach { navItem: NavItem ->
+                        NavigationBarItem(
+                            selected = currentDestination?.hierarchy?.any { it.route == navItem.route } == true,
+                            onClick = {
+                                navController.navigate(navItem.route)
+                            },
+                            icon = {
+                                Image(
+                                    painter = painterResource(id = navItem.icon),
+                                    contentDescription = null)
+                            },
+                            label = {
+                                Text(
+                                    navItem.label
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -63,8 +85,17 @@ fun AppNavigation() {
         Box(modifier = Modifier.padding(paddingValues)) {
             NavHost(
                 navController = navController,
-                startDestination = Screens.HomeScreen.name
+                startDestination = startingScreen
             ) {
+                composable(route = Screens.WelcomeScreen.name) {
+                    WelcomeScreen(navController)
+                }
+                composable(route = Screens.LoginScreen.name){
+                    LoginScreen(navController, vm)
+                }
+                composable(route = Screens.SignupScreen.name){
+                    SignupScreen(navController, vm)
+                }
                 composable(route = Screens.HomeScreen.name) {
                     HomeScreen()
                 }
@@ -106,5 +137,12 @@ fun AppNavigation() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun FullScreenContent(content: @Composable () -> Unit) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        content()
     }
 }

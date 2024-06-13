@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.eidarulu.findme.activities.DestinationScreen
 import com.eidarulu.findme.R
 import com.eidarulu.findme.components.CButton
 import com.eidarulu.findme.components.DontHaveAccountRow
+import com.eidarulu.findme.navigation.Screens
 import com.eidarulu.findme.ui.theme.AlegreyaFontFamily
 import com.eidarulu.findme.ui.theme.AlegreyaSansFontFamily
 
@@ -104,13 +104,13 @@ fun WelcomeScreen(
 
             CButton(text = "Sign In",
                 onClick = {
-                    navController.navigate(DestinationScreen.Login.route)
+                    navController.navigate(Screens.LoginScreen.name)
                 }
             )
 
             DontHaveAccountRow(
                 onSignupTap = {
-                    navController.navigate(DestinationScreen.Signup.route)
+                    navController.navigate(Screens.SignupScreen.name)
                 }
             )
         }
